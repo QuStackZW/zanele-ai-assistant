@@ -1,0 +1,29 @@
+{
+  "name": "virtual-assistant-pharmacist",
+  "version": "1.0.0",
+  "description": "Enhancing the role of technology in the pharmaceutical industry to improve service delivery.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xeroxzen/Virtual-Assistant-Pharmacist.git"
+  },
+  "keywords": [
+    "[\"pharmacy\"",
+    "\"virtual\"",
+    "\"conversational",
+    "ai\"]"
+  ],
+  "author": "Andile Mbele",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xeroxzen/Virtual-Assistant-Pharmacist/issues"
+  },
+  "homepage": "https://github.com/xeroxzen/Virtual-Assistant-Pharmacist#readme",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2"
+  }
+}
