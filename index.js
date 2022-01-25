@@ -14,6 +14,14 @@ process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
 //Let's define port number
 const port = process.env.PORT || 8000;
 
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./config/serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
   (request, response) => {
     const agent = new WebhookClient({ request, response });
