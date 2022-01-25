@@ -4,7 +4,9 @@
   "description": "Enhancing the role of technology in the pharmaceutical industry to improve service delivery.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "firebase serve --only functions:dialogflowFirebaseFulfillment",
+    "deploy": "firebase deploy --only functions:dialogflowFirebaseFulfillment"
   },
   "repository": {
     "type": "git",
@@ -17,13 +19,20 @@
     "ai\"]"
   ],
   "author": "Andile Mbele",
+  "engines": {
+    "node": "14"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/xeroxzen/Virtual-Assistant-Pharmacist/issues"
   },
   "homepage": "https://github.com/xeroxzen/Virtual-Assistant-Pharmacist#readme",
   "dependencies": {
+    "@google-cloud/dialogflow": "^4.6.0",
+    "actions-on-google": "^3.0.0",
     "body-parser": "^1.19.1",
-    "express": "^4.17.2"
+    "dialogflow-fulfillment": "^0.6.1",
+    "express": "^4.17.2",
+    "firebase-admin": "^10.0.2"
   }
 }
