@@ -14,13 +14,27 @@ process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
 //Let's define port number
 const port = process.env.PORT || 8000;
 
+app.get("/", (req, res) => {
+  res.send("Your application is running with no issues!");
+}); // end of app.get
+
 var admin = require("firebase-admin");
 
 var serviceAccount = require("./config/serviceAccountKey.json");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+try {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://vitual-assistant-pharmacy.firebaseio.com",
+  });
+
+  console.log("Firebase initialized");
+} catch (err) {
+  console.log(`Error here ${err}`);
+}
+
+//db access using firestore
+var db = admin.firestore();
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
   (request, response) => {
