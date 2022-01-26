@@ -4,9 +4,8 @@
   "description": "Enhancing the role of technology in the pharmaceutical industry to improve service delivery.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "firebase serve --only functions:dialogflowFirebaseFulfillment",
-    "deploy": "firebase deploy --only functions:dialogflowFirebaseFulfillment"
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
