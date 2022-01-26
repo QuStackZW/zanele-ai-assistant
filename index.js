@@ -10,21 +10,6 @@ const { WebhookClient } = require("dialogflow-fulfillment");
 const { Card, Suggestion } = require("dialogflow-fulfillment");
 const token = "testing"; //verification token
 
-process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
-
-//Let's define port number
-const port = process.env.PORT || 8000;
-
-app.get("/", (req, res) => {
-  res.send("Your application is running with no issues!");
-  if (req.query.token !== token) {
-    res.status(401).send("Unauthorized");
-  }
-
-  // return challenge
-  return res.end(query.query.challenge);
-}); // end of app.get
-
 var admin = require("firebase-admin");
 
 var serviceAccount = require("./config/serviceAccountKey.json");
@@ -42,6 +27,22 @@ try {
 
 //db access using firestore
 var db = admin.firestore();
+db.settings({ ignoreUndefinedProperties: true });
+
+process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
+
+//Let's define port number
+const port = process.env.PORT || 8000;
+
+app.get("/", (req, res) => {
+  res.send("Your application is running with no issues!");
+  if (req.query.token !== token) {
+    res.status(401).send("Unauthorized");
+  }
+
+  // return challenge
+  return res.end(query.query.challenge);
+}); // end of app.get
 
 // exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
 //   (request, response) => {
@@ -56,25 +57,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
     request: req,
     response: res,
   });
-
-  if (req.query.token !== token) {
-    return res.sendStatus(401);
-  }
-
-  // print request body
-  console.log(req.body);
-
-  // return a text response
-  const data = {
-    responses: [
-      {
-        type: "text",
-        elements: ["Hi", "Hello"],
-      },
-    ],
-  };
-
-  res.json(data);
 
   function testing(agent) {
     agent.add(`Yes we are live on port ${port}`);
