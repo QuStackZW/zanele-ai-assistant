@@ -78,7 +78,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add("Sure, what would you like to ask?");
   }
 
-  function bloodPressure(agent) {
+  function howToLowerBloodPressure(agent) {
     agent.add(
       "Your blood pressure can fluctuate throughout the day. For example, it may go up monetarily if you see your idol. Or go down, depending on your situation and point of view. \n\nHowever, having elevated blood pressure over longer periods of time puts you at higher risk for all kinds of problems including heart attacks and stroke. Your first option should never be medications, unless it is an emergency situation. Lifestyle modification should come first such as reducing your sodium intake, losing weight, getting more exercise, limiting alcohol intake, reducing stress, meditating, and listening to some relaxing music. Don't try to manage your blood pressure on your own."
     );
@@ -108,6 +108,36 @@ app.post("/pharmacist", express.json(), (req, res) => {
     );
   }
 
+  function whatCausesKidneyStones(agent) {
+    agent.add(
+      "Kidney stones, otherwise known as renal lithiasis or nephrolithiasis if you want words harder to pronounce, form when some type of mineral or salt clusters together inside your kidneys. Stones can form when you have too much of certain mineral or salt or if you are not hydrated enough. Calcium oxalate or calcium phosphate stones can form when you get high doses of vitamin D, undergo bypass surgery, or have metabolic issues. \n\nUric acid stones can result when you eat too much protein or have gout. Certain types of urinary tract infection can lead to struvite stones."
+    );
+  }
+
+  function whatIsHPV(agent) {
+    agent.add(
+      "The “human papilloma virus”, or HPV, is the most common sexually transmitted infection in the world. HPV is a highly contagious virus which affects the skin and moist membranes of the body such as the cervix, anus, mouth and throat. \n\nHPV is spread primarily through skin-to-skin contact. HPV is the most common sexually transmitted infection, and it is estimated that 80% of people will have at least one type of HPV at some point in their lifetime. You do not have to have sexual intercourse to catch HPV. The virus can be transmitted through touching or genital to genital contact, oral or anal sex. There is even evidence to suggest that deep kissing can spread HPV. \n\nHPV does not have any symptoms, so you may not know if you have it. It will likely only become apparent following a diagnosis with a HPV-related cancer, or genital warts."
+    );
+  }
+
+  function howToLowerCholesterol(agent) {
+    agent.add(
+      "If you are asking this for yourself, you may not want to try the keto diet. Cutting your intake of saturated fats and trans-fats is an important step. So is increasing your intake of omega-3 fatty acids and fiber. \n\nGetting more physical activity and losing weight may help. If you are smoking, stop. Also, limit your alcohol consumption. High cholesterol can increase your risk of stroke and various types of cardiovascular diseases."
+    );
+  }
+
+  function howManyCaloriesShouldIEatADay(agent) {
+    agent.add(
+      "You need calories to survive. However, people probably are wondering how many calories they should eat based on whether they want to gain weight, lose weight, or do neither. The frequently cited threshold is 2,000 calories for women and 2,500 calories for men per day to maintain the same body weight. \n\nHowever, this greatly oversimplifies the complexities of your body. The calories that you need depend heavily, no pun intended, on many factors, including your body size, your age, and your activity level. The Mifflin-St. Jeor equation does take into account differences in sex, age, weight, height, and activity level and serves as the basis for some for some online calorie recommendation calculators. But even these are just approximations and do not account for every factor that may affect your weight. Plus, all calories are not equal. \n\nGetting 2,000 calories from just eating sticks of butter or drinking soda is very different from getting the same number from a more balanced diet. Highly-processed foods may have different effects on your metabolism compared to natural foods."
+    );
+  }
+
+  function howLongDoesAlcoholStayInYourBlood(agent) {
+    agent.add(
+      "This is another tough question that does't have a single set answer for everyone. On average, you are probably able to metabolize about half-a-drink per hour. But the speed at which you break down alcohol depends on a whole lot of things. \n\nFirst of all, how big are you? What is your age? What is your metabolism and general health like? How much food did you have in your stomach to soak up the alcohol so that it didn't get absorbed into your bloodstream? What kinds of drinks did you have and what was their alcohol content? \n\nKeep in mind that even if your body can clear alcohol from your bloodstream at an average rate of 0.015 per hour, a breathalyzer or blood test can still detect alcohol for up to 12 hours, a urine test for up to 3 to 5 days, and a hair test for up to 90 days. If you are going to drive, operate a combine harvester, or do anything that requires good concentration and coordination, the best thing to do is not drink at all. Even if it means, heaven forbid, revealing your real sober personality at a party or on a date, it is not worth the risk to try to time your personal alcohol clearance exactly."
+    );
+  }
+
   function fallback(agent) {
     agent.add(`I didn't understand`);
     agent.add(`I'm sorry, can you try again?`);
@@ -116,6 +146,14 @@ app.post("/pharmacist", express.json(), (req, res) => {
   let intentMap = new Map();
   intentMap.set("Default Welcome Intent", welcome);
   intentMap.set("Default Fallback Intent", fallback);
+  intentMap.set(
+    "Ask Pharmacy or Medical Question",
+    askPharmacyOrMedicalQuestion
+  );
+  intentMap.set("How To Lower Blood Pressure?", howToLowerBloodPressure);
+  intentMap.set("What Is Keto?", whatIsKeto);
+  intentMap.set("How to get rid of hiccups?", howToGetRidOfHiccups);
+  intentMap.set("How long does the flu last?", howLongDoesTheFluLast);
   intentMap.set("Mock Up Demo", testing);
   // intentMap.set('your intent name here', yourFunctionHandler);
   // intentMap.set('your intent name here', googleAssistantHandler);
