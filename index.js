@@ -4,7 +4,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express().use(bodyParser.json()); // creates express http server
-const { initializeApp } = require("firebase-admin/app");
+// const { initializeApp } = require("firebase-admin/app");
 const functions = require("firebase-functions");
 const { WebhookClient } = require("dialogflow-fulfillment");
 const { Card, Suggestion } = require("dialogflow-fulfillment");
