@@ -53,6 +53,10 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
       agent.add(`I'm sorry, can you try again?`);
     }
 
+    function testing(agent) {
+      agent.add(`Yes we are live on port ${port}`);
+    }
+
     // // Uncomment and edit to make your own intent handler
     // // uncomment `intentMap.set('your intent name here', yourFunctionHandler);`
     // // below to get this function to be run when a Dialogflow intent is matched
@@ -86,13 +90,14 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
     let intentMap = new Map();
     intentMap.set("Default Welcome Intent", welcome);
     intentMap.set("Default Fallback Intent", fallback);
+    intentMap.set("Mock Up Demo", testing);
     // intentMap.set('your intent name here', yourFunctionHandler);
     // intentMap.set('your intent name here', googleAssistantHandler);
     agent.handleRequest(intentMap);
   }
 );
 
-app.listen(port, () =>
-  console.log(`[Chatbot] Wewbhook is listening on port ${port}`)
-);
-console.log("press Ctrl+C to cancel");
+app.listen(port, () => {
+  console.log(`[Chatbot] Wewbhook is listening on port ${port}`);
+  console.log("press Ctrl+C to cancel");
+});
