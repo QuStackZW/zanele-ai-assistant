@@ -1,12 +1,12 @@
 # Virtual-Assistant-Pharmacist
 
-### Project Title
+## Project Title
 
 ---
 
 Enhancing the role of technology in the pharmaceutical industry to improve service delivery.
 
-### Platform:
+### Platform
 
 ---
 
@@ -16,7 +16,7 @@ Conversational AI running on multiple platforms including Facebook Messenger and
 
 ---
 
-The solution I am proposing is one where we digitise and make readily available the role of the pharmacist and medical doctor. I will build a chatbot also known as a Conversational Artificial Intelligence application that will play the role of the pharmacist and medical doctor. Users, as in the general public will be able to access the services offered by the application at all times as the system will be accessible 24 hours of the day. Users will be able to interact with the system using either Telegram or Facebook Messenger.
+The solution I am proposing is one where we digitize and make readily available the role of the pharmacist and medical doctor. I will build a chatbot also known as a Conversational Artificial Intelligence application that will play the role of the pharmacist and medical doctor. Users, as in the general public will be able to access the services offered by the application at all times as the system will be accessible 24 hours of the day. Users will be able to interact with the system using either Telegram or Facebook Messenger.
 Through these platforms users will be able to ask pertinent medical or pharmaceutical questions they may have. The digital pharmacist application will then work on providing the best information as possible. Provision of the best information will be necessitated by the chatbot’s machine learning algorithms.
 The second portion of the application will cater for provision and selling of over-the-counter pharmaceutical drugs. Users would be able to make a purchase for any drugs of their choice that can be sold over-the-counter and have those drugs delivered to their homes. This is indeed convenience at its best.
 
