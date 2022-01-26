@@ -102,6 +102,12 @@ app.post("/pharmacist", express.json(), (req, res) => {
     );
   }
 
+  function whatCausesHiccups(agent) {
+    agent.add(
+      "Looks like lots of people are getting hiccups or at least laughing at people who are getting the hiccups this year. This is the second appearance on this list for hiccups. \n\nIt’s not completely clear what may cause temporary hiccups. It may be having too much stuff in your stomach such as food, air, or bacon. It may be sudden changes in temperature. It may be stress or excitement such as seeing Justin Bieber. In most cases, you just don’t know what started them. Chronic or frequently repeated episodes of hiccups are a different story, This can be a sign that something like a mass or inflammation is irritating your diaphragm or the nerves that control and extend to your diaphragm. Certain medication or serious medical conditions such as diabetes, kidney failure, and encephalitis can lead to hiccups as well. Therefore, if hiccups continue to be an issue, call you doctor."
+    );
+  }
+
   function fallback(agent) {
     agent.add(`I didn't understand`);
     agent.add(`I'm sorry, can you try again?`);
