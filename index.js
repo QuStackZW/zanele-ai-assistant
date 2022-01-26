@@ -154,6 +154,18 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("What Is Keto?", whatIsKeto);
   intentMap.set("How to get rid of hiccups?", howToGetRidOfHiccups);
   intentMap.set("How long does the flu last?", howLongDoesTheFluLast);
+  intentMap.set("What Causes Hiccups?", whatCausesHiccups);
+  intentMap.set("What Causes Kidney Stones?", whatCausesKidneyStones);
+  intentMap.set("What Is HPV?", whatIsHPV);
+  intentMap.set("How To Lower Cholesterol?", howToLowerCholesterol);
+  intentMap.set(
+    "How Many Calories Should I Eat A Day?",
+    howManyCaloriesShouldIEatADay
+  );
+  intentMap.set(
+    "How Long Does Alcohol Stay In Your Blood?",
+    howLongDoesAlcoholStayInYourBlood
+  );
   intentMap.set("Mock Up Demo", testing);
   // intentMap.set('your intent name here', yourFunctionHandler);
   // intentMap.set('your intent name here', googleAssistantHandler);
