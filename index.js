@@ -147,7 +147,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("Default Welcome Intent", welcome);
   intentMap.set("Default Fallback Intent", fallback);
   intentMap.set(
-    "Ask Pharmacy or Medical Question",
+    "Ask Pharmacy Or Medical Question",
     askPharmacyOrMedicalQuestion
   );
   intentMap.set("How To Lower Blood Pressure?", howToLowerBloodPressure);
