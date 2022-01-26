@@ -5,7 +5,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express().use(bodyParser.json()); // creates express http server
 // const { initializeApp } = require("firebase-admin/app");
-const functions = require("firebase-functions");
+// const functions = require("firebase-functions");
 const { WebhookClient } = require("dialogflow-fulfillment");
 const { Card, Suggestion } = require("dialogflow-fulfillment");
 const token = "testing"; //verification token
@@ -17,7 +17,7 @@ var serviceAccount = require("./config/serviceAccountKey.json");
 try {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://vitual-assistant-pharmacy.firebaseio.com",
+    databaseURL: "https://virtual-assistant-pharmacy.firebaseio.com",
   });
 
   console.log("Firebase initialized");
@@ -63,7 +63,15 @@ app.post("/pharmacist", express.json(), (req, res) => {
   }
 
   function welcome(agent) {
-    agent.add(`Welcome to my agent!`);
+    agent.add(
+      `Hello. I am Zanele, your awesome virtual assistant pharmacist! I can assist you if you with the following`
+    );
+    agent.add(
+      "1. Ask me medical and pharmaceutical related questions. \n2. Make a purchase for over-the-counter medicine"
+    );
+
+    agent.add(new Suggestion("Ask me a medical question"));
+    agent.add(new Suggestion("Make a purchase"));
   }
 
   function fallback(agent) {
