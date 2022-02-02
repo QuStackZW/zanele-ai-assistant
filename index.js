@@ -138,6 +138,12 @@ app.post("/pharmacist", express.json(), (req, res) => {
     );
   }
 
+  function painRelieversSafeForPregnancy(agent) {
+    agent.add(
+      "Your doctor has likely told you that you shouldn’t take any medicine without checking with them first. You might wonder: Do you need to check with them even if you just want to pop a pain reliever? \n\nThe simple answer is: yes. You should ask your doctor before you take any medication, even if it’s just an over-the-counter pill designed to relieve pain. Such medicine may seem harmless enough, but the rules change when you’re carrying a baby.\n\nSome medicines aren’t safe to take when you’re pregnant -- even over-the-counter ones. \n\nMost pregnant women can take acetaminophen if their doctor gives them the thumbs-up. It’s the most common pain reliever that doctors allow pregnant women to take. Some studies have found that about two-thirds of pregnant women take acetaminophen sometime during their nine-month stretch."
+    );
+  }
+
   function fallback(agent) {
     agent.add(`I didn't understand`);
     agent.add(`I'm sorry, can you try again?`);
@@ -165,6 +171,10 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set(
     "How Long Does Alcohol Stay In Your Blood?",
     howLongDoesAlcoholStayInYourBlood
+  );
+  intentMap.set(
+    "What Pain Relievers Are Safe During Pregnancy?",
+    painRelieversSafeForPregnancy
   );
   intentMap.set("Mock Up Demo", testing);
   // intentMap.set('your intent name here', yourFunctionHandler);
