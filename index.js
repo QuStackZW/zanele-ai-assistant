@@ -150,6 +150,12 @@ app.post("/pharmacist", express.json(), (req, res) => {
     );
   }
 
+  function whatCausesAHeadacheAnyway(agent) {
+    agent.add(
+      "1. Anxiety\nStress can take a toll on you. Breathe, relax and take a stroll. \n\n2. Glare\nBrightness from your computer screen, sunlight or overhead lights can make things painful. Turn it down and try adding a desk lamp. \n\n3. Noise\nIt's not just loud, repetitive sounds. Even lower level on continuous noise can hurt. Calming music and headphones may help. \n\n4. Eating + Sleeping Patterns\nEat when you're hungry. Sleep enough (not too much or too little), and don't sleep in an odd position in a cold room – it can make your muscles spasm. \n\n5. Medication\nSome prescription medications may have the potential to trigger a headache. If you notice an increase, talk to your doctor. \n\n6. Physical Activity\nTake it easy in the gym. Pushing too hard can result in an exertional headache from the swelling of blood vessels in your head, neck and scalp. \n\n7. Lack of physical activity\nEven though over-exertion can increase your risk for headaches, staying sedentary doesn't help either. As with most things in life, moderation is key. Talk to your doctor before beginning or revising any exercise regimen. \n\n8. Posture\nYour mom was right! Sit up straight to keep blood flowing (and move around when you can if you spend extended periods of time bent over a desk). \n\n9. Hormones\nWhen estrogen levels drop (especially right before your period), you may be more likely to get a headache. Keep track of your cycle and plan when you can. \n\n10. Food sensitivities\nFood and drink release neurotransmitters, which can cause headaches in some people. Triggers include aspartame, caffeine, chocolate, alcohol, cheese and more."
+    );
+  }
+
   function fallback(agent) {
     agent.add(`I didn't understand`);
     agent.add(`I'm sorry, can you try again?`);
@@ -183,6 +189,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     painRelieversSafeForPregnancy
   );
   intentMap.set("What is the medication called?", whatIsTheMedicationCalled);
+  intentMap.set("What Causes A Headache Anyway?", whatCausesAHeadacheAnyway);
   intentMap.set("Mock Up Demo", testing);
   // intentMap.set('your intent name here', yourFunctionHandler);
   // intentMap.set('your intent name here', googleAssistantHandler);
