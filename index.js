@@ -17,6 +17,7 @@ const token = "testing"; //verification token
 var admin = require("firebase-admin");
 
 var serviceAccount = require("./config/serviceAccountKey.json");
+const { AgentsClient } = require("@google-cloud/dialogflow");
 
 try {
   admin.initializeApp({
@@ -160,6 +161,11 @@ app.post("/pharmacist", express.json(), (req, res) => {
     );
   }
 
+  // Purchases functionality from the Dialogflow API
+  function makeAPurchase(agent) {
+    AgentsClient.add("What would you like to buy?");
+  }
+
   function fallback(agent) {
     agent.add(`I didn't understand`);
     agent.add(`I'm sorry, can you try again?`);
@@ -195,8 +201,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("What is the medication called?", whatIsTheMedicationCalled);
   intentMap.set("What Causes A Headache Anyway?", whatCausesAHeadacheAnyway);
   intentMap.set("Mock Up Demo", testing);
-  // intentMap.set('your intent name here', yourFunctionHandler);
-  // intentMap.set('your intent name here', googleAssistantHandler);
+  // Purchases here
+  intentMap.set("Make a purchase", makeAPurchase);
   agent.handleRequest(intentMap);
 });
 
