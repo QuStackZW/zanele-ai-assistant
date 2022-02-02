@@ -144,6 +144,12 @@ app.post("/pharmacist", express.json(), (req, res) => {
     );
   }
 
+  function whatIsTheMedicationCalled(agent) {
+    agent.add(
+      "Each medication has two names: the common (also called generic) name and the brand name. The brand name is the name under which a specific manufacturer markets a product (e.g., Tylenol®). The common name is the standard name of the medication (e.g., acetaminophen). The label on your medication will state the brand name, common name, or both. If more than one company makes a medication, its common name will be the same. The brand name will be different for each company. In other countries, the brand name may be different, but the common name is usually the same."
+    );
+  }
+
   function fallback(agent) {
     agent.add(`I didn't understand`);
     agent.add(`I'm sorry, can you try again?`);
@@ -176,6 +182,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     "What Pain Relievers Are Safe During Pregnancy?",
     painRelieversSafeForPregnancy
   );
+  intentMap.set("What is the medication called?", whatIsTheMedicationCalled);
   intentMap.set("Mock Up Demo", testing);
   // intentMap.set('your intent name here', yourFunctionHandler);
   // intentMap.set('your intent name here', googleAssistantHandler);
