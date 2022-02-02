@@ -173,7 +173,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     askPharmacyOrMedicalQuestion
   );
   intentMap.set("How To Lower Blood Pressure?", howToLowerBloodPressure);
-  intentMap.set("What Is Keto?", whatIsKeto);
+  // intentMap.set("What Is Keto?", whatIsKeto);
   intentMap.set("How to get rid of hiccups?", howToGetRidOfHiccups);
   intentMap.set("How long does the flu last?", howLongDoesTheFluLast);
   intentMap.set("What Causes Hiccups?", whatCausesHiccups);
