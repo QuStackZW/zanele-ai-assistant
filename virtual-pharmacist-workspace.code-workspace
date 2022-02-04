@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "..\\..\\fst\\bots\\extra-city-ticketing-chatbot-webhook"
+		},
+		{
+			"path": "..\\..\\fst\\bots\\victoriaFallsMascot"
 		}
 	],
 	"settings": {}

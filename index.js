@@ -163,11 +163,23 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   // Purchases functionality from the Dialogflow API
   function makeAPurchase(agent) {
-    agent.add("Our pharmacy has 3 sections of products, 1. Over the counter-medication, 2. Cosmetics 3. Toiletries?");
-    agent.add(new Suggestion(1))
-    agent.add(new Suggestion(2));
-    agent.add(new Suggestion(3));
+    agent.add(
+      "Our pharmacy has 3 sections of products, 1. Over the counter-medication, 2. Cosmetics 3. Toiletries?"
+    );
+    agent.add(new Suggestion("1"));
+    agent.add(new Suggestion("2"));
+    agent.add(new Suggestion("3"));
   }
+  //User wants to purchase either of the 3 options
+  // User inputs his or her details as prompted
+  // User inputs the amount of the purchase
+  // User inputs the payment method
+  // User inputs the delivery address
+  // User inputs the delivery date
+  // User inputs the delivery time
+  // User inputs the delivery instructions
+  // User inputs the delivery phone number
+  // User inputs the delivery email
 
   function fallback(agent) {
     agent.add(`I didn't understand`);
