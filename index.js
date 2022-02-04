@@ -163,7 +163,10 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   // Purchases functionality from the Dialogflow API
   function makeAPurchase(agent) {
-    AgentsClient.add("What would you like to buy?");
+    agent.add("Our pharmacy has 3 sections of products, 1. Over the counter-medication, 2. Cosmetics 3. Toiletries?");
+    agent.add(new Suggestion(1))
+    agent.add(new Suggestion(2));
+    agent.add(new Suggestion(3));
   }
 
   function fallback(agent) {
