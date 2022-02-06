@@ -52,6 +52,8 @@ The second portion of the application will cater for provision and selling of ov
 Install the dependencies:
 
 ```npm
+andil@Diana MINGW64 ~/Desktop/code/school/virtual-assistant-pharmacist (main)
+$ npm init
 
 ```
 
