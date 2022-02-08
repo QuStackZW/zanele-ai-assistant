@@ -1,0 +1,31 @@
+{
+  "__collections__": {
+    "drugs": {
+      "710uYa1rSxlOzxvr5AqE": {
+        "type": "injectable Solution Veterinary",
+        "drugName": "Banamine",
+        "manufacturer": "Merck",
+        "__collections__": {}
+      }
+    },
+    "orders": {
+      "0uZyrLxjX8u7ziL6ks16": {
+        "email": "andilembele020@gmail.com",
+        "deliveryAddress": "3253 New Luveve, Bulawayo",
+        "paymentMethod": "EcoCash",
+        "drugsOrdered": "Ibruffen",
+        "deliveryDate": {
+          "__datatype__": "timestamp",
+          "value": {
+            "_seconds": 1644271200,
+            "_nanoseconds": 0
+          }
+        },
+        "fullName": "Andile Mbele",
+        "phoneNumber": "0716189728",
+        "amount": 6,
+        "__collections__": {}
+      }
+    }
+  }
+}
