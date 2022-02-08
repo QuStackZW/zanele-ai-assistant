@@ -72,11 +72,11 @@ app.post("/pharmacist", express.json(), (req, res) => {
       "Hello there. I am Zanele, your awesome virtual assistant pharmacist! I can assist you with the following"
     );
     agent.add(
-      "1. Ask a medical or pharmaceutical related question. \n2. Make a purchase for over-the-counter medicine or any of our products"
+      "1. Ask a medical or pharmaceutical related question. \n2. Buy over-the-counter medicine or any of our products"
     );
 
     agent.add(new Suggestion("Ask me a medical question"));
-    agent.add(new Suggestion("Make a purchase"));
+    agent.add(new Suggestion("Buy medicine"));
   }
 
   function askPharmacyOrMedicalQuestion(agent) {
