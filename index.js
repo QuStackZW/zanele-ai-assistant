@@ -262,6 +262,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("What is the medication called?", whatIsTheMedicationCalled);
   intentMap.set("What Causes A Headache Anyway?", whatCausesAHeadacheAnyway);
   intentMap.set("Mock Up Demo", testing);
+  
   // Purchases here
   intentMap.set("Make a purchase", makeAPurchase);
   intent.set("Drug Name", drugName);
