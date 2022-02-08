@@ -243,6 +243,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   function priceOfDrug(agent) {
     agent.add("How much does the drug cost?");
   }
+
   function drugCategory(agent) {
     //     (1) Central Nervous System (CNS) Depressants. CNS depressants slow down the operations of the brain and the body. ...
     // (2) CNS Stimulants. ...
