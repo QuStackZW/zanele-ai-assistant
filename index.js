@@ -170,6 +170,52 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add(new Suggestion("2"));
     agent.add(new Suggestion("3"));
   }
+
+  function drugName(agent) {
+    // Over the counter-Medication
+    agent.add("What's the name of the medication you want to buy?"); // Drug names
+  }
+
+  function howMany(agent) {
+    agent.add("How many units of the medication do you want to buy?");
+  }
+  function whoIsBuying(agent) {
+    agent.add("Who is buying the medication?");
+  }
+
+  function deliveryDate(agent) {
+    agent.add("When do you want to receive the medication?");
+  }
+  function deliveryTime(agent) {
+    agent.add("What time do you want to receive the medication?");
+  }
+  function deliveryAddress(agent) {
+    agent.add("Where do you want to receive the medication?");
+  }
+  function deliveryPhone(agent) {
+    agent.add("What's your phone number?");
+  }
+  function deliveryEmail(agent) {
+    agent.add("What's your email address?");
+  }
+  function drugPrice(agent) {
+    agent.add("How much does the medication cost?");
+  }
+  function paymentMethod(agent) {
+    agent.add("What's the payment method you're using?");
+
+    agent.add(new Suggestion("One Money"));
+    agent.add(new Suggestion("EcoCash"));
+    agent.add(new Suggestion("MyCash"));
+  }
+  function reviewTransaction(agent) {
+    //Details of the purchase
+  }
+
+  function confirmTransaction(agent) {
+    agent.add("Are you sure you want to make this transaction?");
+  }
+
   //User wants to purchase either of the 3 options
   // User inputs his or her details as prompted
   // User inputs the amount of the purchase
@@ -218,6 +264,18 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("Mock Up Demo", testing);
   // Purchases here
   intentMap.set("Make a purchase", makeAPurchase);
+  intent.set("Drug Name", drugName);
+  intent.set("How Many", howMany);
+  intent.set("Who Is Buying", whoIsBuying);
+  intent.set("Delivery Date", deliveryDate);
+  intent.set("Delivery Time", deliveryTime);
+  intent.set("Delivery Address", deliveryAddress);
+  intent.set("Delivery Phone", deliveryPhone);
+  intent.set("Delivery Email", deliveryEmail);
+  intent.set("Drug Price", drugPrice);
+  intent.set("Payment Method", paymentMethod);
+  intent.set("Review Transaction", reviewTransaction);
+  intent.set("Confirm Transaction", confirmTransaction);
   agent.handleRequest(intentMap);
 });
 
