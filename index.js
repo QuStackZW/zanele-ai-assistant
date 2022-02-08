@@ -210,6 +210,24 @@ app.post("/pharmacist", express.json(), (req, res) => {
   }
   function reviewDetails(agent) {
     //Details of the purchase
+    let drugName = agent.parameters.drugName;
+    let howMany = agent.parameters.howMany;
+    let whoIsBuying = agent.parameters.whoIsBuying;
+    let deliveryDate = agent.parameters.deliveryDate;
+    let deliveryTime = agent.parameters.deliveryTime;
+    let deliveryAddress = agent.parameters.deliveryAddress;
+    let deliveryPhone = agent.parameters.deliveryPhone;
+    let deliveryEmail = agent.parameters.deliveryEmail;
+    let drugPrice = agent.parameters.drugPrice;
+    let paymentMethod = agent.parameters.paymentMethod;
+
+    agent.add(
+      `Your Name: ${whoIsBuying} \n\nOrder: ${drugName} \n\nUnits: ${howMany} \n\nDelivery Date: ${deliveryDate} \n\nDelivery Time: ${deliveryTime} \n\nDelivery Address: ${deliveryAddress} \n\nDelivery Phone: ${deliveryPhone} \n\nDelivery Email: ${deliveryEmail} \n\n Price: ${drugPrice} \n\nPayment Method: ${paymentMethod}`
+    );
+
+    agent.add("Confirm transaction details?");
+    agent.add(new Suggestion("Yes"));
+    agent.add(new Suggestion("No"));
   }
 
   function confirmTransaction(agent) {
