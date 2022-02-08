@@ -208,7 +208,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add(new Suggestion("EcoCash"));
     agent.add(new Suggestion("MyCash"));
   }
-  function reviewTransaction(agent) {
+  function reviewDetails(agent) {
     //Details of the purchase
   }
 
@@ -226,6 +226,74 @@ app.post("/pharmacist", express.json(), (req, res) => {
   // User inputs the delivery instructions
   // User inputs the delivery phone number
   // User inputs the delivery email
+
+  //Adding new drugs into database;
+  //User inputs the drug name
+  //User inputs the drug price
+  //User inputs the drug category
+  //user inputs the drug manufacturer
+  //User inputs the drug Administering instructions
+  //User inputs the drug image
+  //Save data to the database;
+
+  function nameOfDrug(agent) {
+    agent.add("What's the name of the drug you want to add?");
+  }
+
+  function priceOfDrug(agent) {
+    agent.add("How much does the drug cost?");
+  }
+  function drugCategory(agent) {
+    //     (1) Central Nervous System (CNS) Depressants. CNS depressants slow down the operations of the brain and the body. ...
+    // (2) CNS Stimulants. ...
+    // (3) Hallucinogens. ...
+    // (4) Dissociative Anesthetics. ...
+    // (5) Narcotic Analgesics. ...
+    // (6) Inhalants. ...
+    // (7) Cannabis.
+    agent.add("What's the category of the drug?");
+  }
+
+  function drugManufacturer(agent) {
+    agent.add("Who is the manufacturer of the drug?");
+  }
+  function drugAdministeringType(agent) {
+    // Oral route.
+    // Sublingual/ Buccal route.
+    // Rectal route.
+    // Topical route.
+    // Transdermal route.
+    // Inhalational route/ pulmonary route.
+    // Injection route.
+    // Oral administration. This is the most frequently used route of drug administration and is the most convenient and economic. ...
+    // Sublingual. ...
+    // Rectal administration. ...
+    // Topical administration. ...
+    // Parenteral administration. ...
+    // Intravenous injection.
+    agent.add("How is the drug administered?");
+  }
+  function drugImage(agent) {
+    agent.add("What's the image of the drug?");
+  }
+  function drugHandler(agent) {
+    let name = agent.parameters.nameOfDrug;
+    let price = agent.parameters.drugPrice;
+    let category = agent.parameters.drugCategory;
+    let manufacturer = agent.parameters.drugManufacturer;
+    let administer = agent.parameters.drugAdministeringMethod;
+    let image = agent.parameters.drugImage; //image of the drug
+
+    db.collection("drugs").add({
+      name: name,
+      price: price,
+      category: category,
+      manufacturer: manufacturer,
+      administer: administer,
+      image: image,
+    });
+    agent.add("Drug added successfully!");
+  }
 
   function fallback(agent) {
     agent.add(`I didn't understand`);
@@ -263,6 +331,15 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("What Causes A Headache Anyway?", whatCausesAHeadacheAnyway);
   intentMap.set("Mock Up Demo", testing);
 
+  //Add Drugs the pharmacy has
+  intentMap.set("Name of Drug", nameOfDrug);
+  intentMap.set("Price of Drug", priceOfDrug);
+  intentMap.set("Drug Category", drugCategory);
+  intentMap.set("Drug Manufacturer", drugManufacturer);
+  intentMap.set("Drug Administering Type", drugAdministeringType);
+  intentMap.set("Drug Image", drugImage);
+  intentMap.set("Drug Handler", drugHandler);
+
   // Purchases here
   intentMap.set("Make a purchase", makeAPurchase);
   intentMap.set("Drug Name", drugName);
@@ -275,7 +352,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("Delivery Email", deliveryEmail);
   intentMap.set("Drug Price", drugPrice);
   intentMap.set("Payment Method", paymentMethod);
-  intentMap.set("Review Transaction", reviewTransaction);
+  intentMap.set("Review Details", reviewDetails);
   intentMap.set("Confirm Transaction", confirmTransaction);
   agent.handleRequest(intentMap);
 });
