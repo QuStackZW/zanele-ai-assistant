@@ -218,7 +218,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   //User wants to purchase either of the 3 options
   // User inputs his or her details as prompted
-  // User inputs the amount of the purchase
+  // UseMapr inputs the amount of the purchase
   // User inputs the payment method
   // User inputs the delivery address
   // User inputs the delivery date
@@ -262,21 +262,21 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("What is the medication called?", whatIsTheMedicationCalled);
   intentMap.set("What Causes A Headache Anyway?", whatCausesAHeadacheAnyway);
   intentMap.set("Mock Up Demo", testing);
-  
+
   // Purchases here
   intentMap.set("Make a purchase", makeAPurchase);
-  intent.set("Drug Name", drugName);
-  intent.set("How Many", howMany);
-  intent.set("Who Is Buying", whoIsBuying);
-  intent.set("Delivery Date", deliveryDate);
-  intent.set("Delivery Time", deliveryTime);
-  intent.set("Delivery Address", deliveryAddress);
-  intent.set("Delivery Phone", deliveryPhone);
-  intent.set("Delivery Email", deliveryEmail);
-  intent.set("Drug Price", drugPrice);
-  intent.set("Payment Method", paymentMethod);
-  intent.set("Review Transaction", reviewTransaction);
-  intent.set("Confirm Transaction", confirmTransaction);
+  intentMap.set("Drug Name", drugName);
+  intentMap.set("How Many", howMany);
+  intentMap.set("Who Is Buying", whoIsBuying);
+  intentMap.set("Delivery Date", deliveryDate);
+  intentMap.set("Delivery Time", deliveryTime);
+  intentMap.set("Delivery Address", deliveryAddress);
+  intentMap.set("Delivery Phone", deliveryPhone);
+  intentMap.set("Delivery Email", deliveryEmail);
+  intentMap.set("Drug Price", drugPrice);
+  intentMap.set("Payment Method", paymentMethod);
+  intentMap.set("Review Transaction", reviewTransaction);
+  intentMap.set("Confirm Transaction", confirmTransaction);
   agent.handleRequest(intentMap);
 });
 
