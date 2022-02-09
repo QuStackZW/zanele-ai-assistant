@@ -69,7 +69,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   function welcome(agent) {
     agent.add(
-      "Hello there. I am Zanele, your awesome virtual assistant pharmacist! I can assist you with the following"
+      "Hello there. I am Kate, your awesome virtual assistant pharmacist! I can assist you with the following"
     );
     agent.add(
       "1. Ask a medical or pharmaceutical related question. \n2. Buy over-the-counter medicine or any of our products \n3. Add Drug"
