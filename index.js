@@ -231,7 +231,30 @@ app.post("/pharmacist", express.json(), (req, res) => {
   }
 
   function confirmTransaction(agent) {
-    agent.add("Are you sure you want to make this transaction?");
+    let drugName = agent.parameters.drugName;
+    let howMany = agent.parameters.howMany;
+    let whoIsBuying = agent.parameters.whoIsBuying;
+    let deliveryDate = agent.parameters.deliveryDate;
+    let deliveryTime = agent.parameters.deliveryTime;
+    let deliveryAddress = agent.parameters.deliveryAddress;
+    let deliveryPhone = agent.parameters.deliveryPhone;
+    let deliveryEmail = agent.parameters.deliveryEmail;
+    let drugPrice = agent.parameters.drugPrice;
+    let paymentMethod = agent.parameters.paymentMethod;
+
+    db.collection("purchases").add({
+      drug: drugName,
+      units: howMany,
+      buyer: whoIsBuying,
+      date: deliveryDate,
+      time: deliveryTime,
+      address: deliveryAddress,
+      phone: deliveryPhone,
+      email: deliveryEmail,
+      price: drugPrice,
+      paymentMethod: paymentMethod,
+    });
+    agent.add("Your order was successful");
   }
 
   //User wants to purchase either of the 3 options
