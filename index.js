@@ -209,7 +209,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add(new Suggestion("EcoCash"));
     agent.add(new Suggestion("MyCash"));
   }
-  function reviewDetails(agent) {
+  function reviewTransactionDetails(agent) {
     //Details of the purchase
     let drugName = agent.parameters.drugName;
     let howMany = agent.parameters.howMany;
@@ -233,7 +233,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   function confirmTransaction(agent) {
     let drugName = agent.parameters.drugName;
-    let howMany = agent.parameters.howMany;
+    let units = agent.parameters.units;
     let whoIsBuying = agent.parameters.whoIsBuying;
     let deliveryDate = agent.parameters.deliveryDate;
     let deliveryTime = agent.parameters.deliveryTime;
@@ -245,7 +245,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
     db.collection("purchases").add({
       drug: drugName,
-      units: howMany,
+      units: units,
       buyer: whoIsBuying,
       date: deliveryDate,
       time: deliveryTime,
@@ -397,8 +397,9 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("Delivery Email", deliveryEmail);
   intentMap.set("Drug Price", drugPrice);
   intentMap.set("Payment Method", paymentMethod);
-  intentMap.set("Review Details", reviewDetails);
-  intentMap.set("Confirm Transaction", confirmTransaction);
+  intentMap.set("Review Transaction Details", reviewTransactionDetails);
+  // intentMap.set("Confirm Transaction", confirmTransaction);
+  intentMap.set("Review Transaction Details - yes", confirmTransaction);
   agent.handleRequest(intentMap);
 });
 
