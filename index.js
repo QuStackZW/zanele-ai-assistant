@@ -165,11 +165,11 @@ app.post("/pharmacist", express.json(), (req, res) => {
   // Purchases functionality from the Dialogflow API
   function makeAPurchase(agent) {
     agent.add(
-      "Super Med Pharmacy has 3 categories of products; \n\n1. Over the counter-medication,\n2. Cosmetics \n3. Toiletries?"
+      "Super Med Pharmacy has 3 categories of products; \n\n1. Over the counter-medication,\n2. Cosmetics \n3. Toiletries \n\nSelect your choice"
     );
-    agent.add(new Suggestion("1"));
-    agent.add(new Suggestion("2"));
-    agent.add(new Suggestion("3"));
+    agent.add(new Suggestion("Drugs"));
+    agent.add(new Suggestion("Cosmetics"));
+    agent.add(new Suggestion("Toiletries"));
   }
 
   function drugName(agent) {
