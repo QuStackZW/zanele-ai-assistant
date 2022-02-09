@@ -75,9 +75,9 @@ app.post("/pharmacist", express.json(), (req, res) => {
       "1. Ask a medical or pharmaceutical related question. \n2. Buy over-the-counter medicine or any of our products \n3. Add Drug"
     );
 
-    agent.add(new Suggestion("1"));
-    agent.add(new Suggestion("2"));
-    agent.add(new Suggestion("3"));
+    agent.add(new Suggestion("Ask Question"));
+    agent.add(new Suggestion("Add to Cart"));
+    agent.add(new Suggestion("Add Drug"));
   }
 
   function askPharmacyOrMedicalQuestion(agent) {
@@ -167,9 +167,9 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add(
       "Super Med Pharmacy has 3 categories of products; \n\n1. Over the counter-medication,\n2. Cosmetics \n3. Toiletries?"
     );
-    agent.add(new Suggestion("Ask Question"));
-    agent.add(new Suggestion("Add to Cart"));
-    agent.add(new Suggestion("Add Drug"));
+    agent.add(new Suggestion("1"));
+    agent.add(new Suggestion("2"));
+    agent.add(new Suggestion("3"));
   }
 
   function drugName(agent) {
