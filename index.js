@@ -388,7 +388,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   // Purchases here
   intentMap.set("Make a purchase", makeAPurchase);
   intentMap.set("Drug Name", drugName);
-  intentMap.set("How Many", howMany);
+  intentMap.set("How Many Units", howMany);
   intentMap.set("Who Is Buying", whoIsBuying);
   intentMap.set("Delivery Date", deliveryDate);
   intentMap.set("Delivery Time", deliveryTime);
