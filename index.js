@@ -346,6 +346,9 @@ app.post("/pharmacist", express.json(), (req, res) => {
   let intentMap = new Map();
   intentMap.set("Default Welcome Intent", welcome);
   intentMap.set("Default Fallback Intent", fallback);
+  intentMap.set("Mock Up Demo", testing);
+
+  //Pharmaceutical Questions
   intentMap.set(
     "Ask Pharmacy Or Medical Question",
     askPharmacyOrMedicalQuestion
@@ -372,10 +375,9 @@ app.post("/pharmacist", express.json(), (req, res) => {
   );
   intentMap.set("What is the medication called?", whatIsTheMedicationCalled);
   intentMap.set("What Causes A Headache Anyway?", whatCausesAHeadacheAnyway);
-  intentMap.set("Mock Up Demo", testing);
 
   //Add Drugs the pharmacy has
-  intentMap.set("Name of Drug", nameOfDrug);
+  intentMap.set("Add Drug", nameOfDrug);
   intentMap.set("Price of Drug", priceOfDrug);
   intentMap.set("Drug Category", drugCategory);
   intentMap.set("Drug Manufacturer", drugManufacturer);
