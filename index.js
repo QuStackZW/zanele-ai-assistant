@@ -228,7 +228,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let linkedNumber = agent.parameters.linkedNumber;
 
     agent.add(
-      `Your Name: ${whoIsBuying} \n\nOrder: ${drugName} \n\nUnits: ${howMany} \n\nDelivery Date: ${deliveryDate} \n\nDelivery Time: ${deliveryTime} \n\nDelivery Address: ${deliveryAddress} \n\nDelivery Phone: ${deliveryPhone} \n\nDelivery Email: ${deliveryEmail} \n\n Price: ${drugPrice} \n\nPayment Method: ${paymentMethod}`
+      `Your Name: ${whoIsBuying} \n\nOrder: ${drugName} \n\nUnits: ${howMany} \n\nDelivery Date: ${deliveryDate} \n\nDelivery Time: ${deliveryTime} \n\nDelivery Address: ${deliveryAddress} \n\nDelivery Phone: ${deliveryPhone} \n\nDelivery Email: ${deliveryEmail} \n\n Price: ${drugPrice} \n\nPayment Method: ${paymentMethod} \n\nLinked Number: ${linkedNumber}`
     );
 
     agent.add("Confirm transaction details?");
@@ -247,6 +247,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let deliveryEmail = agent.parameters.deliveryEmail;
     let drugPrice = agent.parameters.drugPrice;
     let paymentMethod = agent.parameters.PaymentMethod;
+    let linkedNumber = agent.parameters.linkedNumber;
 
     db.collection("purchases").add({
       drug: drugName,
@@ -259,6 +260,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
       email: deliveryEmail,
       price: drugPrice,
       paymentMethod: paymentMethod,
+      linkedNumber: linkedNumber,
     });
     agent.add("Your order was successful");
   }
