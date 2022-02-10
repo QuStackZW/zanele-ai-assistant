@@ -69,7 +69,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   function welcome(agent) {
     agent.add(
-      "Hello there. I am Kate, your awesome virtual assistant pharmacist! I can assist you with the following"
+      "Hello there. I am Zanele, your awesome virtual assistant pharmacist! I can assist you with the following"
     );
     agent.add(
       "1. Ask a medical or pharmaceutical related question. \n2. Buy over-the-counter medicine or any of our products \n3. Add Drug"
@@ -319,6 +319,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   function drugImage(agent) {
     agent.add("What's the image of the drug?");
   }
+
   function drugHandler(agent) {
     let name = agent.parameters.nameOfDrug;
     let price = agent.parameters.drugPrice;
@@ -387,15 +388,15 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   // Purchases here
   intentMap.set("Make a purchase", makeAPurchase);
-  intentMap.set("Drug Name", drugName);
-  intentMap.set("How Many Units", howMany);
-  intentMap.set("Who Is Buying", whoIsBuying);
-  intentMap.set("Delivery Date", deliveryDate);
-  intentMap.set("Delivery Time", deliveryTime);
-  intentMap.set("Delivery Address", deliveryAddress);
-  intentMap.set("Delivery Phone", deliveryPhone);
-  intentMap.set("Delivery Email", deliveryEmail);
-  intentMap.set("Drug Price", drugPrice);
+  intentMap.set("DrugName", drugName);
+  intentMap.set("HowManyUnits", howMany);
+  intentMap.set("WhoIsBuying", whoIsBuying);
+  intentMap.set("DeliveryDate", deliveryDate);
+  intentMap.set("DeliveryTime", deliveryTime);
+  intentMap.set("DeliveryAddress", deliveryAddress);
+  intentMap.set("DeliveryPhone", deliveryPhone);
+  intentMap.set("DeliveryEmail", deliveryEmail);
+  intentMap.set("DrugPrice", drugPrice);
   intentMap.set("Payment Method", paymentMethod);
   intentMap.set("Review Transaction Details", reviewTransactionDetails);
   // intentMap.set("Confirm Transaction", confirmTransaction);
