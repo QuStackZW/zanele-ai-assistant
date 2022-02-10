@@ -256,7 +256,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let deliveryPhone = agent.parameters.deliveryPhone;
     let deliveryEmail = agent.parameters.deliveryEmail;
     let drugPrice = agent.parameters.drugPrice;
-    let paymentMethod = agent.parameters.PaymentMethod;
+    let paymentMethod = agent.parameters.paymentMethod;
     let linkedNumber = agent.parameters.linkedNumber;
 
     db.collection("purchases")
@@ -345,12 +345,16 @@ app.post("/pharmacist", express.json(), (req, res) => {
   }
 
   async function drugHandler(agent) {
-    let name = agent.parameters.nameOfDrug;
-    let price = agent.parameters.drugPrice;
-    let category = agent.parameters.drugCategory;
-    let manufacturer = agent.parameters.drugManufacturer;
-    let administer = agent.parameters.drugAdministrationMethod;
-    let image = agent.parameters.drugImage; //image of the drug
+    //const email = agent.context.get("getpaymentsemail-followup").parameters.email;
+    let name = agent.context.get("NameofDrug-followup").parameters.nameOfDrug;
+    let price = agent.context.get("PriceofDrug-followup").parameters.drugPrice;
+    let category = agent.context.get("DrugCategory-followup").parameters
+      .drugCategory;
+    let manufacturer = agent.context.get("DrugCategory-custom-followup")
+      .parameters.drugManufacturer;
+    let adminType = agent.context.get("DrugCategory-custom-custom-followup")
+      .parameters.drugAdministrationMethod;
+    let image = agent.context.get("DrugImage-followup").parameters.drugImage;
 
     db.collection("drugs")
       .add({
@@ -358,7 +362,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
         price: price,
         category: category,
         manufacturer: manufacturer,
-        administer: administer,
+        adminType: adminType,
         image: image,
       })
       .then(function (docRef) {
