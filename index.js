@@ -8,6 +8,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express().use(bodyParser.json()); // creates express http server
+const myApp = dialogflow({ debug: true });
 // const { initializeApp } = require("firebase-admin/app");
 // const functions = require("firebase-functions");
 const { WebhookClient } = require("dialogflow-fulfillment");
@@ -56,6 +57,14 @@ app.get("/", (req, res) => {
 //       "Dialogflow Request headers: " + JSON.stringify(request.headers)
 //     );
 //         console.log("Dialogflow Request body: " + JSON.stringify(request.body));
+myApp.intent("Wassup", (conv) => {
+  conv.ask("Welcome to number echo! Say a number.");
+});
+myApp.intent("Input Number", (conv, { num }) => {
+  // extract the num parameter as a local string variable
+  conv.close(`You said ${num}`);
+});
+exports.yourAction = functions.https.onRequest(myApp);
 
 app.post("/pharmacist", express.json(), (req, res) => {
   const agent = new WebhookClient({
