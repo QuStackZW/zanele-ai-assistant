@@ -228,7 +228,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let linkedNumber = agent.parameters.linkedNumber;
 
     agent.add(
-      `Your Name: ${whoIsBuying} \n\nOrder: ${drugName} \n\nUnits: ${howMany} \n\nDelivery Date: ${deliveryDate} \n\nDelivery Time: ${deliveryTime} \n\nDelivery Address: ${deliveryAddress} \n\nDelivery Phone: ${deliveryPhone} \n\nDelivery Email: ${deliveryEmail} \n\n Price: ${drugPrice} \n\nPayment Method: ${paymentMethod} \n\nLinked Number: ${linkedNumber}`
+      `Your Name: ${whoIsBuying} \nOrder: ${drugName} \nUnits: ${howMany} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nDelivery Email: ${deliveryEmail} \n Price: ${drugPrice} \nPayment Method: ${paymentMethod} \nLinked Number: ${linkedNumber}`
     );
 
     agent.add("Confirm transaction details?");
@@ -332,7 +332,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let price = agent.parameters.drugPrice;
     let category = agent.parameters.drugCategory;
     let manufacturer = agent.parameters.drugManufacturer;
-    let administer = agent.parameters.drugAdministeringMethod;
+    let administer = agent.parameters.drugAdministrationMethod;
     let image = agent.parameters.drugImage; //image of the drug
 
     db.collection("drugs").add({
