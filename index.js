@@ -223,7 +223,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   function linkedNumber(agent) {
     agent.add(`What is your ${agent.parameters.paymentMethod} linked number?`);
   }
-  function reviewTransactionDetails(agent) {
+  async function reviewTransactionDetails(agent) {
     //Details of the purchase
     let drugName = agent.parameters.drugName;
     let howMany = agent.parameters.howMany;
@@ -246,7 +246,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add(new Suggestion("No"));
   }
 
-  function confirmTransaction(agent) {
+  async function confirmTransaction(agent) {
     let drugName = agent.parameters.drugName;
     let units = agent.parameters.units;
     let whoIsBuying = agent.parameters.whoIsBuying;
@@ -259,19 +259,26 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let paymentMethod = agent.parameters.PaymentMethod;
     let linkedNumber = agent.parameters.linkedNumber;
 
-    db.collection("purchases").add({
-      drug: drugName,
-      units: units,
-      buyer: whoIsBuying,
-      date: deliveryDate,
-      time: deliveryTime,
-      address: deliveryAddress,
-      phone: deliveryPhone,
-      email: deliveryEmail,
-      price: drugPrice,
-      paymentMethod: paymentMethod,
-      linkedNumber: linkedNumber,
-    });
+    db.collection("purchases")
+      .add({
+        drug: drugName,
+        units: units,
+        buyer: whoIsBuying,
+        date: deliveryDate,
+        time: deliveryTime,
+        address: deliveryAddress,
+        phone: deliveryPhone,
+        email: deliveryEmail,
+        price: drugPrice,
+        paymentMethod: paymentMethod,
+        linkedNumber: linkedNumber,
+      })
+      .then(function (docRef) {
+        agent.add("Order added successfully");
+      })
+      .catch(function (error) {
+        agent.add("Error adding document: ", error);
+      });
     agent.add("Your order was successful");
   }
 
@@ -337,7 +344,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add("What's the image of the drug?");
   }
 
-  function drugHandler(agent) {
+  async function drugHandler(agent) {
     let name = agent.parameters.nameOfDrug;
     let price = agent.parameters.drugPrice;
     let category = agent.parameters.drugCategory;
