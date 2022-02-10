@@ -241,7 +241,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let deliveryPhone = agent.parameters.deliveryPhone;
     let deliveryEmail = agent.parameters.deliveryEmail;
     let drugPrice = agent.parameters.drugPrice;
-    let paymentMethod = agent.parameters.paymentMethod;
+    let paymentMethod = agent.parameters.PaymentMethod;
 
     db.collection("purchases").add({
       drug: drugName,
