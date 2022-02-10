@@ -57,6 +57,7 @@ app.get("/", (req, res) => {
 //       "Dialogflow Request headers: " + JSON.stringify(request.headers)
 //     );
 //         console.log("Dialogflow Request body: " + JSON.stringify(request.body));
+
 myApp.intent("Wassup", (conv) => {
   conv.ask("Welcome to number echo! Say a number.");
 });
@@ -344,15 +345,21 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let administer = agent.parameters.drugAdministrationMethod;
     let image = agent.parameters.drugImage; //image of the drug
 
-    db.collection("drugs").add({
-      name: name,
-      price: price,
-      category: category,
-      manufacturer: manufacturer,
-      administer: administer,
-      image: image,
-    });
-    agent.add("Drug added successfully!");
+    db.collection("drugs")
+      .add({
+        name: name,
+        price: price,
+        category: category,
+        manufacturer: manufacturer,
+        administer: administer,
+        image: image,
+      })
+      .then(function (docRef) {
+        agent.add("Drug added successfully");
+      })
+      .catch(function (error) {
+        agent.add("Error adding document: ", error);
+      });
   }
 
   function fallback(agent) {
