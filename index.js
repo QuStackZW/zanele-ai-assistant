@@ -209,6 +209,10 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add(new Suggestion("EcoCash"));
     agent.add(new Suggestion("MyCash"));
   }
+
+  function linkedNumber(agent) {
+    agent.add(`What is your ${agent.parameters.paymentMethod} linked number?`);
+  }
   function reviewTransactionDetails(agent) {
     //Details of the purchase
     let drugName = agent.parameters.drugName;
@@ -221,6 +225,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let deliveryEmail = agent.parameters.deliveryEmail;
     let drugPrice = agent.parameters.drugPrice;
     let paymentMethod = agent.parameters.paymentMethod;
+    let linkedNumber = agent.parameters.linkedNumber;
 
     agent.add(
       `Your Name: ${whoIsBuying} \n\nOrder: ${drugName} \n\nUnits: ${howMany} \n\nDelivery Date: ${deliveryDate} \n\nDelivery Time: ${deliveryTime} \n\nDelivery Address: ${deliveryAddress} \n\nDelivery Phone: ${deliveryPhone} \n\nDelivery Email: ${deliveryEmail} \n\n Price: ${drugPrice} \n\nPayment Method: ${paymentMethod}`
@@ -398,6 +403,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("DeliveryEmail", deliveryEmail);
   intentMap.set("DrugPrice", drugPrice);
   intentMap.set("Payment Method", paymentMethod);
+  intentMap.set("LinkedNumber", linkedNumber);
   intentMap.set("Review Transaction Details", reviewTransactionDetails);
   // intentMap.set("Confirm Transaction", confirmTransaction);
   intentMap.set("Review Transaction Details - yes", confirmTransaction);
