@@ -431,25 +431,28 @@ app.post("/pharmacist", express.json(), (req, res) => {
   function whatIsYourAge(agent) {
     agent.add("How old are you?");
   }
-  function saveUserDetails(agent) {
+  async function saveUserDetails(agent) {
     const name = agent.context.get("Whatisyourname-followup").parameters.name; //User's name");
-    const age = agent.context.get("save-data").parameters.age; //User's age");
+    const age = agent.context.get("Whatisyourage-followup").parameters.age; //User's age");
     // let name = agent.parameters.name;
     // let age = agent.parameters.age;
 
-    return db
-      .collection("users")
+    db.collection("users")
       .add({
         name: name,
         age: age,
       })
       .then((ref) => {
+        agent.add(
+          `User details saved successfully. The Reference ID is ${ref.id}`
+        );
         console.log(`Successfully added: ${ref.id}`);
-        agent.add("User details saved successfully");
       })
       .catch(function (error) {
         console.error("Error adding document: ", error);
       });
+    agent.add(new Suggestion("Get Started"));
+    agent.add(new Suggestion("Search for drugs"));
   }
 
   function fallback(agent) {
