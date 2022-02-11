@@ -411,6 +411,49 @@ app.post("/pharmacist", express.json(), (req, res) => {
       });
   }
 
+  // function UserAccount(agent) {
+  //   //Register a user
+  //   //Get the user's National ID
+  //   agent.add("Please enter your full name");
+  // }
+
+  // *********************************************USER ACCOUNT DETAILS*******************************************************//
+  function userName(agent) {
+    //Get the user's fullname
+    agent.add("Please enter your full name");
+  }
+  function userDateOfBirth(agent) {
+    //Get the user's date of birth
+    agent.add("Please enter your date of birth");
+  }
+
+  function userNationalIdentification(agent) {
+    //Get the user's national identification number'
+    agent.add(
+      "Please enter your national identification number. (e.g. 08-2127708X35)"
+    );
+  }
+  function userGender(agent) {
+    //Get the user's Gender
+    agent.add(new Suggestion("Female"));
+    agent.add(new Suggestion("Male"));
+  }
+
+  function userTelephoneNumber(agent) {
+    //Get the user's telephone number
+    agent.add("Please enter your phone number");
+  }
+  function userAddress(agent) {
+    // Get the user's home Address
+    agent.add("Please enter your home address");
+  }
+  function userCity(agent) {
+    //Get the user's City/town
+    agent.add("Which city do you live in?");
+  }
+  // ********************************************* END OF USER ACCOUNT DETAILS*******************************************************//
+
+  // *********************************************FETCH DRUGS FROM DB*******************************************************//
   function getDrugs(agent) {
     db.collection("drugs")
       .get()
@@ -423,7 +466,9 @@ app.post("/pharmacist", express.json(), (req, res) => {
         console.log("Error getting documents", err);
       });
   }
+  // *********************************************END OF FETCH DRUGS FROM DB*******************************************************//
 
+  // *********************************************TEST IF IT SAVES TO DB*******************************************************//
   function whatIsYourName(agent) {
     agent.add("What is your name?");
   }
@@ -466,12 +511,16 @@ app.post("/pharmacist", express.json(), (req, res) => {
         console.error("Error adding document: ", error);
       });
   }
+  // *********************************************END OF TEST IF IT SAVES TO DB*******************************************************//
 
+  // *********************************************FALLBACK INTENT*******************************************************//
   function fallback(agent) {
     agent.add(`I didn't understand`);
     agent.add(`I'm sorry, can you try again?`);
   }
+  // *********************************************END OF FALLBACK INTENT*******************************************************//
 
+  //**************************************************INTENT MAPS AS DEFINED BY THE CODE AND DIALOGFLOW*****************************************************//
   let intentMap = new Map();
   intentMap.set("Default Welcome Intent", welcome);
   intentMap.set("Default Fallback Intent", fallback);
@@ -534,12 +583,14 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("Payment Method", paymentMethod);
   intentMap.set("LinkedNumber", linkedNumber);
   intentMap.set("Review Transaction Details", reviewTransactionDetails);
-  // intentMap.set("Confirm Transaction", confirmTransaction);
   intentMap.set("Review Transaction Details - yes", confirmTransaction);
   agent.handleRequest(intentMap);
 });
+//**************************************************END OF INTENT MAPS AS DEFINED BY THE CODE AND DIALOGFLOW*****************************************************//
 
+//**************************************************APP LISTEN*****************************************************//
 app.listen(port, () => {
   console.log(`Chatbot Webhook is listening on port ${port}`);
   console.log("press Ctrl+C to cancel");
 });
+//**************************************************END OF APP LISTEN*****************************************************//
