@@ -345,7 +345,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
   }
 
   async function drugHandler(agent) {
-    //const email = agent.context.get("getpaymentsemail-followup").parameters.email;
     let name = agent.context.get("NameofDrug-followup").parameters.nameOfDrug;
     let price = agent.context.get("PriceofDrug-followup").parameters.drugPrice;
     let category = agent.context.get("DrugCategory-followup").parameters
@@ -384,6 +383,73 @@ app.post("/pharmacist", express.json(), (req, res) => {
       });
   }
 
+  async function saveToDb(agent) {
+    let name = agent.context.get("save-to-db").parameters.name;
+    let price = agent.context.get("save-to-db").parameters.price;
+    let category = agent.context.get("save-to-db").parameters.category;
+    let manufacturer = agent.context.get("save-to-db").parameters.manufacturer;
+    let adminType = agent.context.get("save-to-db").parameters.adminType;
+    let image = agent.context.get("save-to-db").parameters.image;
+    let docId = agent.context.get("save-to-db").parameters.docId;
+
+    return db
+      .collection("drugs")
+      .doc(docId)
+      .set({
+        name: name,
+        price: price,
+        category: category,
+        manufacturer: manufacturer,
+        adminType: adminType,
+        image: image,
+      })
+      .then(function () {
+        console.log("Document successfully written!");
+      })
+      .catch(function (error) {
+        console.error("Error writing document: ", error);
+      });
+  }
+
+  function getDrugs(agent) {
+    db.collection("drugs")
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          agent.add(doc.data().name);
+        });
+      })
+      .catch((err) => {
+        console.log("Error getting documents", err);
+      });
+  }
+
+  function whatIsYourName(agent) {
+    agent.add("My name is Mapr");
+  }
+
+  function whatIsYourAge(agent) {
+    agent.add("I am a new agent");
+  }
+  function saveUserDetails(agent) {
+    let name = agent.parameters.name;
+    let age = agent.parameters.age;
+
+    return db
+      .collection("users")
+      .add({
+        name: name,
+        age: age,
+      })
+      .then((ref) => {
+        console.log(`Successfully added: ${ref.id}`);
+        agent.add("User details saved successfully");
+      })
+      .catch(function (error) {
+        console.error("Error adding document: ", error);
+      });
+  }
+
   function fallback(agent) {
     agent.add(`I didn't understand`);
     agent.add(`I'm sorry, can you try again?`);
@@ -393,6 +459,11 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("Default Welcome Intent", welcome);
   intentMap.set("Default Fallback Intent", fallback);
   intentMap.set("Mock Up Demo", testing);
+
+  //Database testing
+  intentMap.set("What is your name", whatIsYourName);
+  intentMap.set("What is your age", whatIsYourAge);
+  intentMap.set("Save User Details", saveUserDetails);
 
   //Pharmaceutical Questions
   intentMap.set(
