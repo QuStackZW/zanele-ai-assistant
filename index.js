@@ -429,11 +429,13 @@ app.post("/pharmacist", express.json(), (req, res) => {
   }
 
   function whatIsYourAge(agent) {
-    agent.add("HOw old are you?");
+    agent.add("How old are you?");
   }
   function saveUserDetails(agent) {
-    let name = agent.parameters.name;
-    let age = agent.parameters.age;
+    let name = agent.context.get("Whatisyourname-followup").parameters.name; //User's name");
+    let age = agent.context.get("Whatisyourage-followup").parameters.age; //User's age");
+    // let name = agent.parameters.name;
+    // let age = agent.parameters.age;
 
     return db
       .collection("users")
