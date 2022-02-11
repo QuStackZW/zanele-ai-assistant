@@ -432,8 +432,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add("How old are you?");
   }
   function saveUserDetails(agent) {
-    let name = agent.context.get("Whatisyourname-followup").parameters.name; //User's name");
-    let age = agent.context.get("save-data").parameters.age; //User's age");
+    const name = agent.context.get("Whatisyourname-followup").parameters.name; //User's name");
+    const age = agent.context.get("save-data").parameters.age; //User's age");
     // let name = agent.parameters.name;
     // let age = agent.parameters.age;
 
