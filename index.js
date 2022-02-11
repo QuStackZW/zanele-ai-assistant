@@ -425,11 +425,11 @@ app.post("/pharmacist", express.json(), (req, res) => {
   }
 
   function whatIsYourName(agent) {
-    agent.add("My name is Mapr");
+    agent.add("What is your name?");
   }
 
   function whatIsYourAge(agent) {
-    agent.add("I am a new agent");
+    agent.add("HOw old are you?");
   }
   function saveUserDetails(agent) {
     let name = agent.parameters.name;
