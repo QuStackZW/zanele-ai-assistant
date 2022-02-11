@@ -431,6 +431,17 @@ app.post("/pharmacist", express.json(), (req, res) => {
   function whatIsYourAge(agent) {
     agent.add("How old are you?");
   }
+
+  function confirmPersonalDetails() {
+    const name = agent.context.get("getName").parameters.name;
+    const age = agent.context.get("getAge").parameters.age;
+
+    agent.add(`Your name is ${name} and you are ${age} years old`);
+    agent.add("Confirm");
+
+    agent.add(new Suggestion("Yes"));
+    agent.add(new Suggestion("No"));
+  }
   async function saveUserDetails(agent) {
     const name = agent.context.get("getName").parameters.name; //User's name");
     const age = agent.context.get("getAge").parameters.age; //User's age");
@@ -469,6 +480,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   //Database testing
   intentMap.set("What is your name", whatIsYourName);
   intentMap.set("What is your age", whatIsYourAge);
+  intentMap.set("Confirm Personal Details", confirmPersonalDetails);
   intentMap.set("Save User Details", saveUserDetails);
 
   //Pharmaceutical Questions
