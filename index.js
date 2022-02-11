@@ -3,7 +3,7 @@
 //Date: 2/2/2022
 //Description: Chatbot for healthcare
 
-"use strict";
+"use --trace-warnings";
 
 const express = require("express");
 const bodyParser = require("body-parser");
