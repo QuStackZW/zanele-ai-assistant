@@ -372,62 +372,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
         agent.add("Error adding document: ", error);
       });
     agent.add("Your drug was added successfully");
-
-    // return db
-    //   .collection("drugs")
-    //   .add({
-    //     name: name,
-    //     price: price,
-    //     category: category,
-    //     manufacturer: manufacturer,
-    //     adminType: adminType,
-    //     image: image,
-    //   })
-    //   .then((ref) => {
-    //     agent.context.set("save-to-db", 5, {
-    //       name: name,
-    //       price: price,
-    //       category: category,
-    //       manufacturer: manufacturer,
-    //       adminType: adminType,
-    //       image: image,
-    //       docId: ref.id,
-    //     });
-    //     console.log(`Successfully added: ${ref.id}`);
-    //     agent.add("Drug added successfully");
-    //   })
-    //   .catch(function (error) {
-    //     agent.add("Error adding document: ", error);
-    //   });
   }
 
-  async function saveToDb(agent) {
-    let name = agent.context.get("save-to-db").parameters.name;
-    let price = agent.context.get("save-to-db").parameters.price;
-    let category = agent.context.get("save-to-db").parameters.category;
-    let manufacturer = agent.context.get("save-to-db").parameters.manufacturer;
-    let adminType = agent.context.get("save-to-db").parameters.adminType;
-    let image = agent.context.get("save-to-db").parameters.image;
-    let docId = agent.context.get("save-to-db").parameters.docId;
-
-    return db
-      .collection("drugs")
-      .doc(docId)
-      .set({
-        name: name,
-        price: price,
-        category: category,
-        manufacturer: manufacturer,
-        adminType: adminType,
-        image: image,
-      })
-      .then(function () {
-        console.log("Document successfully written!");
-      })
-      .catch(function (error) {
-        console.error("Error writing document: ", error);
-      });
-  }
   // ********************************************END DRUG DETAILS*****************************************************//
 
   // *********************************************USER ACCOUNT DETAILS*******************************************************//
