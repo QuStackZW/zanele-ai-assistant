@@ -252,8 +252,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
       .add({
         drug: drugName,
         buyer: whoIsBuying,
-        date: deliveryDate,
-        time: deliveryTime,
+        date: humanReadableDate,
+        time: humanReadableTime,
         address: deliveryAddress,
         phone: deliveryPhone,
         paymentMethod: paymentMethod,
