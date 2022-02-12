@@ -43,6 +43,12 @@ process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
 //Let's define port number
 const port = process.env.PORT || 8000;
 
+app.get("/app/:id", checkUserAuth, findApp, renderView, sendJSON);
+function checkUserAuth(req, res, next) {
+  if (req.session.user) return next();
+  return next(new NotAuthorizedError());
+}
+
 app.get("/", (req, res) => {
   res.send("Your application is running with no issues!");
   if (req.query.token !== token) {
@@ -52,23 +58,6 @@ app.get("/", (req, res) => {
   // return challenge
   return res.end(query.query.challenge);
 }); // end of app.get
-
-// exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
-//   (request, response) => {
-//     const agent = new WebhookClient({ request, response });
-//     console.log(
-//       "Dialogflow Request headers: " + JSON.stringify(request.headers)
-//     );
-//         console.log("Dialogflow Request body: " + JSON.stringify(request.body));
-
-// myApp.intent("Wassup", (conv) => {
-//   conv.ask("Welcome to number echo! Say a number.");
-// });
-// myApp.intent("Input Number", (conv, { num }) => {
-//   // extract the num parameter as a local string variable
-//   conv.close(`You said ${num}`);
-// });
-// exports.yourAction = functions.https.onRequest(myApp);
 
 app.post("/pharmacist", express.json(), (req, res) => {
   const agent = new WebhookClient({
