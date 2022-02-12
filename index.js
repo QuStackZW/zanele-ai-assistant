@@ -228,12 +228,31 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let paymentPhone = agent.parameters.paymentPhone;
 
     agent.add(
-      `Your Name: ${whoIsBuying} \nOrder: ${drugName} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
+      `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
     );
 
     agent.add("Confirm transaction details?");
     agent.add(new Suggestion("Yes"));
     agent.add(new Suggestion("No"));
+
+    db.collection("purchases")
+      .add({
+        drug: drugName,
+        buyer: whoIsBuying,
+        date: deliveryDate,
+        time: deliveryTime,
+        address: deliveryAddress,
+        phone: deliveryPhone,
+        paymentMethod: paymentMethod,
+        paymentPhone: paymentPhone,
+      })
+      .then(function (docRef) {
+        agent.add("Order added successfully");
+      })
+      .catch(function (error) {
+        agent.add("Error adding document: ", error);
+      });
+    agent.add("Your order was successful");
   }
 
   async function confirmTransaction(agent) {
