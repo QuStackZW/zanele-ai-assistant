@@ -201,34 +201,34 @@ app.post("/pharmacist", express.json(), (req, res) => {
     //   paymentMethod = order.payMethod;
     //   paymentPhone = order.paymentPhone;
 
-    let name = agent.context.get("DrugOrderDetails-followup").parameters
-      .drugName;
-    let buyer = agent.context.get("DrugOrderDetails-followup").parameters
-      .buyerID;
-    let date = agent.context.get("DrugOrderDetails-followup").parameters
-      .deliveryDate;
-    let time = agent.context.get("DrugOrderDetails-followup").parameters
-      .deliveryTime;
-    let address = agent.context.get("DrugOrderDetails-followup").parameters
-      .deliveryAddress;
-    let phone = agent.context.get("DrugOrderDetails-followup").parameters
-      .deliveryPhone;
-    let payMethod = agent.context.get("DrugOrderDetails-followup").parameters
-      .payMethod;
-    let payPhone = agent.context.get("DrugOrderDetails-followup").parameters
-      .paymentPhone;
+    // let name = agent.context.get("DrugOrderDetails-followup").parameters
+    //   .drugName;
+    // let buyer = agent.context.get("DrugOrderDetails-followup").parameters
+    //   .buyerID;
+    // let date = agent.context.get("DrugOrderDetails-followup").parameters
+    //   .deliveryDate;
+    // let time = agent.context.get("DrugOrderDetails-followup").parameters
+    //   .deliveryTime;
+    // let address = agent.context.get("DrugOrderDetails-followup").parameters
+    //   .deliveryAddress;
+    // let phone = agent.context.get("DrugOrderDetails-followup").parameters
+    //   .deliveryPhone;
+    // let payMethod = agent.context.get("DrugOrderDetails-followup").parameters
+    //   .payMethod;
+    // let payPhone = agent.context.get("DrugOrderDetails-followup").parameters
+    //   .paymentPhone;
 
-    // let drugName = agent.parameters.drugName;
-    // let whoIsBuying = agent.parameters.buyerID;
-    // let deliveryDate = agent.parameters.deliveryDate;
-    // let deliveryTime = agent.parameters.deliveryTime;
-    // let deliveryAddress = agent.parameters.deliveryAddress;
-    // let deliveryPhone = agent.parameters.deliveryPhone;
-    // let paymentMethod = agent.parameters.payMethod;
-    // let paymentPhone = agent.parameters.paymentPhone;
+    let drugName = agent.parameters.drugName;
+    let whoIsBuying = agent.parameters.buyerID;
+    let deliveryDate = agent.parameters.deliveryDate;
+    let deliveryTime = agent.parameters.deliveryTime;
+    let deliveryAddress = agent.parameters.deliveryAddress;
+    let deliveryPhone = agent.parameters.deliveryPhone;
+    let paymentMethod = agent.parameters.payMethod;
+    let paymentPhone = agent.parameters.paymentPhone;
 
     agent.add(
-      `Your Name: ${buyer} \nOrder: ${name} \nDelivery Date: ${date} \nDelivery Time: ${time} \nDelivery Address: ${address} \nDelivery Phone: ${phone} \nPayment Method: ${payMethod} \nLinked Number: ${payPhone}`
+      `Your Name: ${whoIsBuying} \nOrder: ${drugName} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
     );
 
     agent.add("Confirm transaction details?");
@@ -486,7 +486,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   // intentMap.set("DrugPrice", drugPrice);
   // intentMap.set("Payment Method", paymentMethod);
   // intentMap.set("LinkedNumber", linkedNumber);
-  intentMap.set("Drug Order Details - next", reviewTransactionDetails);
+  intentMap.set("Drug Order Details", reviewTransactionDetails);
   intentMap.set("Confirm Transaction", confirmTransaction);
   //************************************END OF DRUG PURCHASES****************************************//
   agent.handleRequest(intentMap);
