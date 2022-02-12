@@ -192,14 +192,15 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   async function reviewTransactionDetails(agent) {
     //Details of the purchase
-    let drugName = agent.parameters.drugName;
-    let whoIsBuying = agent.parameters.buyerID;
-    let deliveryDate = agent.parameters.deliveryDate;
-    let deliveryTime = agent.parameters.deliveryTime;
-    let deliveryAddress = agent.parameters.deliveryAddress;
-    let deliveryPhone = agent.parameters.deliveryPhone;
-    let paymentMethod = agent.parameters.payMethod;
-    let paymentPhone = agent.parameters.paymentPhone;
+    const order = agent.context.get("DrugOrderDetails-followup");
+    drugName = order.parameters.drugName;
+    whoIsBuying = order.parameters.buyerID;
+    deliveryDate = order.parameters.deliveryDate;
+    deliveryTime = order.parameters.deliveryTime;
+    deliveryAddress = order.parameters.deliveryAddress;
+    deliveryPhone = order.parameters.deliveryPhone;
+    paymentMethod = order.parameters.payMethod;
+    paymentPhone = order.parameters.paymentPhone;
 
     agent.add(
       `Your Name: ${whoIsBuying} \nOrder: ${drugName} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \n${paymentMethod} Number: ${paymentPhone}`
@@ -212,14 +213,15 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   async function confirmTransaction(agent) {
     //Details of the purchase
-    let drugName = agent.parameters.drugName;
-    let whoIsBuying = agent.parameters.buyerID;
-    let deliveryDate = agent.parameters.deliveryDate;
-    let deliveryTime = agent.parameters.deliveryTime;
-    let deliveryAddress = agent.parameters.deliveryAddress;
-    let deliveryPhone = agent.parameters.deliveryPhone;
-    let paymentMethod = agent.parameters.payMethod;
-    let paymentPhone = agent.parameters.paymentPhone;
+    const order = agent.context.get("DrugOrderDetails-followup");
+    drugName = order.parameters.drugName;
+    whoIsBuying = order.parameters.buyerID;
+    deliveryDate = order.parameters.deliveryDate;
+    deliveryTime = order.parameters.deliveryTime;
+    deliveryAddress = order.parameters.deliveryAddress;
+    deliveryPhone = order.parameters.deliveryPhone;
+    paymentMethod = order.parameters.payMethod;
+    paymentPhone = order.parameters.paymentPhone;
 
     db.collection("purchases")
       .add({
