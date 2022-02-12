@@ -283,6 +283,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add("Your order was successful");
   }
 
+  // ********************************************DRUG DETAILS*****************************************************//
+
   //User wants to purchase either of the 3 options
   // User inputs his or her details as prompted
   // UseMapr inputs the amount of the purchase
@@ -303,61 +305,57 @@ app.post("/pharmacist", express.json(), (req, res) => {
   //User inputs the drug image
   //Save data to the database;
 
-  function nameOfDrug(agent) {
-    agent.add("What's the name of the drug you want to add?");
-  }
+  // function nameOfDrug(agent) {
+  //   agent.add("What's the name of the drug you want to add?");
+  // }
 
-  function priceOfDrug(agent) {
-    agent.add("How much does the drug cost?");
-  }
+  // function priceOfDrug(agent) {
+  //   agent.add("How much does the drug cost?");
+  // }
 
-  function drugCategory(agent) {
-    //  Central Nervous System (CNS) Depressants. CNS depressants slow down the operations of the brain and the body. ...
-    //  CNS Stimulants. ...
-    //  Hallucinogens. ...
-    //  Dissociative Anesthetics. ...
-    //  Narcotic Analgesics. ...
-    //  Inhalants. ...
-    //  Cannabis.
-    agent.add("What's the category of the drug?");
-  }
+  // function drugCategory(agent) {
+  //   //  Central Nervous System (CNS) Depressants. CNS depressants slow down the operations of the brain and the body. ...
+  //   //  CNS Stimulants. ...
+  //   //  Hallucinogens. ...
+  //   //  Dissociative Anesthetics. ...
+  //   //  Narcotic Analgesics. ...
+  //   //  Inhalants. ...
+  //   //  Cannabis.
+  //   agent.add("What's the category of the drug?");
+  // }
 
-  function drugManufacturer(agent) {
-    agent.add("Who is the manufacturer of the drug?");
-  }
-  function drugAdministeringType(agent) {
-    // Oral route.
-    // Sublingual/ Buccal route.
-    // Rectal route.
-    // Topical route.
-    // Transdermal route.
-    // Inhalational route/ pulmonary route.
-    // Injection route.
-    // Oral administration. This is the most frequently used route of drug administration and is the most convenient and economic. ...
-    // Sublingual. ...
-    // Rectal administration. ...
-    // Topical administration. ...
-    // Parenteral administration. ...
-    // Intravenous injection.
-    agent.add("How is the drug administered?");
-  }
-  function drugImage(agent) {
-    agent.add("What's the image of the drug?");
-  }
+  // function drugManufacturer(agent) {
+  //   agent.add("Who is the manufacturer of the drug?");
+  // }
+  // function drugAdministeringType(agent) {
+  //   // Oral route.
+  //   // Sublingual/ Buccal route.
+  //   // Rectal route.
+  //   // Topical route.
+  //   // Transdermal route.
+  //   // Inhalational route/ pulmonary route.
+  //   // Injection route.
+  //   // Oral administration. This is the most frequently used route of drug administration and is the most convenient and economic. ...
+  //   // Sublingual. ...
+  //   // Rectal administration. ...
+  //   // Topical administration. ...
+  //   // Parenteral administration. ...
+  //   // Intravenous injection.
+  //   agent.add("How is the drug administered?");
+  // }
+  // function drugImage(agent) {
+  //   agent.add("What's the image of the drug?");
+  // }
 
   async function drugHandler(agent) {
-    let name = agent.context.get("NameofDrug-followup").parameters.nameOfDrug;
-    let price = agent.context.get("PriceofDrug-followup").parameters.drugPrice;
-    let category = agent.context.get("DrugCategory-followup").parameters
-      .drugCategory;
-    let manufacturer = agent.context.get("DrugCategory-custom-followup")
-      .parameters.drugManufacturer;
-    let adminType = agent.context.get("DrugCategory-custom-custom-followup")
-      .parameters.drugAdministrationMethod;
-    let image = agent.context.get("DrugImage-followup").parameters.drugImage;
+    let name = agent.parameters.name;
+    let price = agent.parameters.price;
+    let category = agent.parameters.category;
+    let manufacturer = agent.parameters.manufacturer;
+    let adminType = agent.parameters.adminType;
+    let image = agent.parameters.url;
 
-    return db
-      .collection("drugs")
+    db.collection("drugs")
       .add({
         name: name,
         price: price,
@@ -366,22 +364,40 @@ app.post("/pharmacist", express.json(), (req, res) => {
         adminType: adminType,
         image: image,
       })
-      .then((ref) => {
-        agent.context.set("save-to-db", 5, {
-          name: name,
-          price: price,
-          category: category,
-          manufacturer: manufacturer,
-          adminType: adminType,
-          image: image,
-          docId: ref.id,
-        });
-        console.log(`Successfully added: ${ref.id}`);
+      .then(function (docRef) {
         agent.add("Drug added successfully");
       })
       .catch(function (error) {
         agent.add("Error adding document: ", error);
       });
+    agent.add("Your drug was added successfully");
+
+    // return db
+    //   .collection("drugs")
+    //   .add({
+    //     name: name,
+    //     price: price,
+    //     category: category,
+    //     manufacturer: manufacturer,
+    //     adminType: adminType,
+    //     image: image,
+    //   })
+    //   .then((ref) => {
+    //     agent.context.set("save-to-db", 5, {
+    //       name: name,
+    //       price: price,
+    //       category: category,
+    //       manufacturer: manufacturer,
+    //       adminType: adminType,
+    //       image: image,
+    //       docId: ref.id,
+    //     });
+    //     console.log(`Successfully added: ${ref.id}`);
+    //     agent.add("Drug added successfully");
+    //   })
+    //   .catch(function (error) {
+    //     agent.add("Error adding document: ", error);
+    //   });
   }
 
   async function saveToDb(agent) {
@@ -411,7 +427,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
         console.error("Error writing document: ", error);
       });
   }
-  // ********************************************END USER ACCOUNT DETAILS*****************************************************//
+  // ********************************************END DRUG DETAILS*****************************************************//
 
   // *********************************************USER ACCOUNT DETAILS*******************************************************//
 
@@ -487,7 +503,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
   function confirmPersonalDetails() {
     const name = agent.context.get("getName").parameters.name;
     const age = agent.context.get("getAge").parameters.age;
-
     agent.add(`Your name is ${name} and you are ${age} years old`);
     agent.add("Confirm");
 
@@ -574,13 +589,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   //******************************END OF PHARMACEUTICAL QUESTIONS*************************************//
 
   //*******************************DRUGS THE PHARMACY HAS IN-STOCK********************************//
-  intentMap.set("Add Drug", nameOfDrug);
-  intentMap.set("Price of Drug", priceOfDrug);
-  intentMap.set("Drug Category", drugCategory);
-  intentMap.set("Drug Manufacturer", drugManufacturer);
-  intentMap.set("Drug Administering Type", drugAdministeringType);
-  intentMap.set("Drug Image", drugImage);
-  intentMap.set("Drug Handler", drugHandler);
+  intentMap.set("Drug Details", drugHandler);
 
   //************************************DRUG PURCHASES****************************************//
   intentMap.set("Make a purchase", makeAPurchase);
