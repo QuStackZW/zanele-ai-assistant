@@ -365,6 +365,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
         image: image,
       })
       .then(function (docRef) {
+        console.log("Drug added successfully");
         agent.add("Drug added successfully");
       })
       .catch(function (error) {
