@@ -178,7 +178,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add(
       "Super Med Pharmacy has 3 categories of products; \n\n1. Over the counter-medication,\n2. Cosmetics \n3. Toiletries \n\nSelect your choice"
     );
-    agent.add(new Suggestion("Drugs"));
+    agent.add(new Suggestion("Medication"));
     agent.add(new Suggestion("Cosmetics"));
     agent.add(new Suggestion("Toiletries"));
   }
