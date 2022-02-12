@@ -182,37 +182,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add(new Suggestion("Cosmetics"));
     agent.add(new Suggestion("Toiletries"));
   }
-
-  function drugName(agent) {
-    // Over the counter-Medication
-    agent.add("What's the name of the medication you want to buy?"); // Drug names
-  }
-
-  function howMany(agent) {
-    agent.add("How many units of the medication do you want to buy?");
-  }
-  function whoIsBuying(agent) {
-    agent.add("Who is buying the medication?");
-  }
-
-  function deliveryDate(agent) {
-    agent.add("When do you want to receive the medication?");
-  }
-  function deliveryTime(agent) {
-    agent.add("What time do you want to receive the medication?");
-  }
-  function deliveryAddress(agent) {
-    agent.add("Where do you want to receive the medication?");
-  }
-  function deliveryPhone(agent) {
-    agent.add("What's your phone number?");
-  }
-  function deliveryEmail(agent) {
-    agent.add("What's your email address?");
-  }
-  function drugPrice(agent) {
-    agent.add("How much does the medication cost?");
-  }
   function paymentMethod(agent) {
     agent.add("What's the payment method you're using?");
 
@@ -540,15 +509,15 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   //************************************DRUG PURCHASES****************************************//
   intentMap.set("Make a purchase", makeAPurchase);
-  intentMap.set("DrugName", drugName);
-  intentMap.set("HowManyUnits", howMany);
-  intentMap.set("WhoIsBuying", whoIsBuying);
-  intentMap.set("DeliveryDate", deliveryDate);
-  intentMap.set("DeliveryTime", deliveryTime);
-  intentMap.set("DeliveryAddress", deliveryAddress);
-  intentMap.set("DeliveryPhone", deliveryPhone);
-  intentMap.set("DeliveryEmail", deliveryEmail);
-  intentMap.set("DrugPrice", drugPrice);
+  // intentMap.set("DrugName", drugName);
+  // intentMap.set("HowManyUnits", howMany);
+  // intentMap.set("WhoIsBuying", whoIsBuying);
+  // intentMap.set("DeliveryDate", deliveryDate);
+  // intentMap.set("DeliveryTime", deliveryTime);
+  // intentMap.set("DeliveryAddress", deliveryAddress);
+  // intentMap.set("DeliveryPhone", deliveryPhone);
+  // intentMap.set("DeliveryEmail", deliveryEmail);
+  // intentMap.set("DrugPrice", drugPrice);
   intentMap.set("Payment Method", paymentMethod);
   intentMap.set("LinkedNumber", linkedNumber);
   intentMap.set("Review Transaction Details", reviewTransactionDetails);
