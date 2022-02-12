@@ -192,15 +192,15 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   async function reviewTransactionDetails(agent) {
     //Details of the purchase
-    const order = agent.context.get("DrugOrderDetails-followup");
-    drugName = order.parameters.drugName;
-    whoIsBuying = order.parameters.buyerID;
-    deliveryDate = order.parameters.deliveryDate;
-    deliveryTime = order.parameters.deliveryTime;
-    deliveryAddress = order.parameters.deliveryAddress;
-    deliveryPhone = order.parameters.deliveryPhone;
-    paymentMethod = order.parameters.payMethod;
-    paymentPhone = order.parameters.paymentPhone;
+    const order = agent.context.get("DrugOrderDetails-followup").parameters;
+    drugName = order.drugName;
+    whoIsBuying = order.buyerID;
+    deliveryDate = order.deliveryDate;
+    deliveryTime = order.deliveryTime;
+    deliveryAddress = order.deliveryAddress;
+    deliveryPhone = order.deliveryPhone;
+    paymentMethod = order.payMethod;
+    paymentPhone = order.paymentPhone;
 
     agent.add(
       `Your Name: ${whoIsBuying} \nOrder: ${drugName} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
