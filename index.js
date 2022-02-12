@@ -203,25 +203,27 @@ app.post("/pharmacist", express.json(), (req, res) => {
     paymentPhone = order.parameters.paymentPhone;
 
     agent.add(
-      `Your Name: ${whoIsBuying} \nOrder: ${drugName} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \n${paymentMethod} Number: ${paymentPhone}`
+      `Your Name: ${whoIsBuying} \nOrder: ${drugName} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
     );
 
-    agent.add("Confirm Transaction");
+    agent.add("Confirm transaction details?");
     agent.add(new Suggestion("Yes"));
     agent.add(new Suggestion("No"));
   }
 
   async function confirmTransaction(agent) {
     //Details of the purchase
-    const order = agent.context.get("DrugOrderDetails-followup");
-    drugName = order.parameters.drugName;
-    whoIsBuying = order.parameters.buyerID;
-    deliveryDate = order.parameters.deliveryDate;
-    deliveryTime = order.parameters.deliveryTime;
-    deliveryAddress = order.parameters.deliveryAddress;
-    deliveryPhone = order.parameters.deliveryPhone;
-    paymentMethod = order.parameters.payMethod;
-    paymentPhone = order.parameters.paymentPhone;
+    let drugName = agent.parameters.drugName;
+    // let howMany = agent.parameters.howMany;
+    let whoIsBuying = agent.parameters.buyerID;
+    let deliveryDate = agent.parameters.deliveryDate;
+    let deliveryTime = agent.parameters.deliveryTime;
+    let deliveryAddress = agent.parameters.deliveryAddress;
+    let deliveryPhone = agent.parameters.deliveryPhone;
+    // let deliveryEmail = agent.parameters.deliveryEmail;
+    // let drugPrice = agent.parameters.drugPrice;
+    let paymentMethod = agent.parameters.payMethod;
+    let paymentPhone = agent.parameters.paymentPhone;
 
     db.collection("purchases")
       .add({
