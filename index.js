@@ -255,6 +255,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add("Your order was successful");
   }
 
+  //Change to Track Transaction
+
   async function confirmTransaction(agent) {
     let drugName = agent.parameters.drugName;
     let whoIsBuying = agent.parameters.buyerID;
@@ -494,19 +496,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   //************************************DRUG PURCHASES****************************************//
   intentMap.set("Make a purchase", makeAPurchase);
-  // intentMap.set("DrugName", drugName);
-  // intentMap.set("HowManyUnits", howMany);
-  // intentMap.set("WhoIsBuying", whoIsBuying);
-  // intentMap.set("DeliveryDate", deliveryDate);
-  // intentMap.set("DeliveryTime", deliveryTime);
-  // intentMap.set("DeliveryAddress", deliveryAddress);
-  // intentMap.set("DeliveryPhone", deliveryPhone);
-  // intentMap.set("DeliveryEmail", deliveryEmail);
-  // intentMap.set("DrugPrice", drugPrice);
-  // intentMap.set("Payment Method", paymentMethod);
-  // intentMap.set("LinkedNumber", linkedNumber);
   intentMap.set("Drug Order Details", reviewTransactionDetails);
-  intentMap.set("Confirm Transaction", confirmTransaction);
+  // intentMap.set("Confirm Transaction", confirmTransaction);
   //************************************END OF DRUG PURCHASES****************************************//
   agent.handleRequest(intentMap);
 });
