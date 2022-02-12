@@ -173,6 +173,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   }
 
   // Purchases functionality from the Dialogflow API
+  // *********************************************MAKING A PURCHASE*******************************************************//
   function makeAPurchase(agent) {
     agent.add(
       "Super Med Pharmacy has 3 categories of products; \n\n1. Over the counter-medication,\n2. Cosmetics \n3. Toiletries \n\nSelect your choice"
@@ -311,13 +312,13 @@ app.post("/pharmacist", express.json(), (req, res) => {
   }
 
   function drugCategory(agent) {
-    //     (1) Central Nervous System (CNS) Depressants. CNS depressants slow down the operations of the brain and the body. ...
-    // (2) CNS Stimulants. ...
-    // (3) Hallucinogens. ...
-    // (4) Dissociative Anesthetics. ...
-    // (5) Narcotic Analgesics. ...
-    // (6) Inhalants. ...
-    // (7) Cannabis.
+    //  Central Nervous System (CNS) Depressants. CNS depressants slow down the operations of the brain and the body. ...
+    //  CNS Stimulants. ...
+    //  Hallucinogens. ...
+    //  Dissociative Anesthetics. ...
+    //  Narcotic Analgesics. ...
+    //  Inhalants. ...
+    //  Cannabis.
     agent.add("What's the category of the drug?");
   }
 
@@ -410,47 +411,50 @@ app.post("/pharmacist", express.json(), (req, res) => {
         console.error("Error writing document: ", error);
       });
   }
-
-  // function UserAccount(agent) {
-  //   //Register a user
-  //   //Get the user's National ID
-  //   agent.add("Please enter your full name");
-  // }
+  // ********************************************END USER ACCOUNT DETAILS*****************************************************//
 
   // *********************************************USER ACCOUNT DETAILS*******************************************************//
-  function userName(agent) {
+
+  function userAccount(agent) {
     //Get the user's fullname
-    agent.add("Please enter your full name");
-  }
-  function userDateOfBirth(agent) {
     //Get the user's date of birth
-    agent.add("Please enter your date of birth");
-  }
-
-  function userNationalIdentification(agent) {
     //Get the user's national identification number'
-    agent.add(
-      "Please enter your national identification number. (e.g. 08-2127708X35)"
-    );
-  }
-  function userGender(agent) {
     //Get the user's Gender
-    agent.add(new Suggestion("Female"));
-    agent.add(new Suggestion("Male"));
+    //Get the user's telephone number
+    // Get the user's home Address
+    //Get the user's City/town
+
+    let person = agent.parameters.person;
+    let city = agent.parameters.city;
+    let address = agent.parameters.address;
+    let phone = agent.parameters.phone;
+    let age = agent.parameters.age;
+    let nationalID = agent.parameters.nationalID;
+    let gender = agent.parameters.gender;
+
+    console.log(
+      `Name: ${person} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \n age: ${age} \nNational ID ${nationalID} ${gender}`
+    );
+
+    return db
+      .collection("users")
+      .add({
+        person: person,
+        city: city,
+        address: address,
+        phone: phone,
+        age: age,
+        nationalID: nationalID,
+        gender: gender,
+      })
+      .then(
+        (ref) => console.log("Successfully added user"),
+        agent.add(new Suggestion("Buy Drugs")),
+        agent.add(new Suggestion("Ask Question")),
+        agent.end("")
+      );
   }
 
-  function userTelephoneNumber(agent) {
-    //Get the user's telephone number
-    agent.add("Please enter your phone number");
-  }
-  function userAddress(agent) {
-    // Get the user's home Address
-    agent.add("Please enter your home address");
-  }
-  function userCity(agent) {
-    //Get the user's City/town
-    agent.add("Which city do you live in?");
-  }
   // ********************************************* END OF USER ACCOUNT DETAILS*******************************************************//
 
   // *********************************************FETCH DRUGS FROM DB*******************************************************//
@@ -511,34 +515,39 @@ app.post("/pharmacist", express.json(), (req, res) => {
         console.error("Error adding document: ", error);
       });
   }
-  // *********************************************END OF TEST IF IT SAVES TO DB*******************************************************//
+  // **************************************END OF TEST IF IT SAVES TO DB*************************************//
 
-  // *********************************************FALLBACK INTENT*******************************************************//
+  // ******************************************FALLBACK INTENT***********************************************//
   function fallback(agent) {
     agent.add(`I didn't understand`);
     agent.add(`I'm sorry, can you try again?`);
   }
-  // *********************************************END OF FALLBACK INTENT*******************************************************//
+  // ***************************************END OF FALLBACK INTENT**********************************************//
 
-  //**************************************************INTENT MAPS AS DEFINED BY THE CODE AND DIALOGFLOW*****************************************************//
+  //***************************INTENT MAPS AS DEFINED BY THE CODE AND DIALOGFLOW*******************************//
   let intentMap = new Map();
   intentMap.set("Default Welcome Intent", welcome);
   intentMap.set("Default Fallback Intent", fallback);
   intentMap.set("Mock Up Demo", testing);
 
-  //Database testing
+  //***************************DATABASE TESTING********************************************//
   intentMap.set("What is your name", whatIsYourName);
   intentMap.set("What is your age", whatIsYourAge);
   intentMap.set("Confirm Personal Details", confirmPersonalDetails);
   intentMap.set("Save User Details", saveUserDetails);
+  //********************************DATABASE TESTING********************************************//
 
-  //Pharmaceutical Questions
+  //***************************USER ACCOUNT********************************************//
+  intentMap.set("User Account", userAccount);
+  //********************************END OF USER ACCOUNT********************************************//
+
+  //********************************PHARMACEUTICAL QUESTIONS********************************************//
+
   intentMap.set(
     "Ask Pharmacy Or Medical Question",
     askPharmacyOrMedicalQuestion
   );
   intentMap.set("How To Lower Blood Pressure?", howToLowerBloodPressure);
-  // intentMap.set("What Is Keto?", whatIsKeto);
   intentMap.set("How to get rid of hiccups?", howToGetRidOfHiccups);
   intentMap.set("How long does the flu last?", howLongDoesTheFluLast);
   intentMap.set("What Causes Hiccups?", whatCausesHiccups);
@@ -559,8 +568,9 @@ app.post("/pharmacist", express.json(), (req, res) => {
   );
   intentMap.set("What is the medication called?", whatIsTheMedicationCalled);
   intentMap.set("What Causes A Headache Anyway?", whatCausesAHeadacheAnyway);
+  //******************************END OF PHARMACEUTICAL QUESTIONS*************************************//
 
-  //Add Drugs the pharmacy has
+  //*******************************DRUGS THE PHARMACY HAS IN-STOCK********************************//
   intentMap.set("Add Drug", nameOfDrug);
   intentMap.set("Price of Drug", priceOfDrug);
   intentMap.set("Drug Category", drugCategory);
@@ -569,7 +579,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("Drug Image", drugImage);
   intentMap.set("Drug Handler", drugHandler);
 
-  // Purchases here
+  //************************************DRUG PURCHASES****************************************//
   intentMap.set("Make a purchase", makeAPurchase);
   intentMap.set("DrugName", drugName);
   intentMap.set("HowManyUnits", howMany);
@@ -584,8 +594,10 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("LinkedNumber", linkedNumber);
   intentMap.set("Review Transaction Details", reviewTransactionDetails);
   intentMap.set("Review Transaction Details - yes", confirmTransaction);
+  //************************************END OF DRUG PURCHASES****************************************//
   agent.handleRequest(intentMap);
 });
+
 //**************************************************END OF INTENT MAPS AS DEFINED BY THE CODE AND DIALOGFLOW*****************************************************//
 
 //**************************************************APP LISTEN*****************************************************//
