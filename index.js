@@ -433,7 +433,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let gender = agent.parameters.gender;
 
     console.log(
-      `Name: ${person} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \n age: ${age} \nNational ID ${nationalID} ${gender}`
+      `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \n age: ${age} \nNational ID ${nationalID} ${gender}`
     );
 
     return db
@@ -443,12 +443,15 @@ app.post("/pharmacist", express.json(), (req, res) => {
         city: city,
         address: address,
         phone: phone,
-        age: age,
+        birthday: age,
         nationalID: nationalID,
         gender: gender,
       })
       .then(
         (ref) => console.log("Successfully added user"),
+        agent.add(
+          `Thank you ${person.name}. You have been successfully registered`
+        ),
         agent.add(new Suggestion("Buy Drugs")),
         agent.add(new Suggestion("Ask Question")),
         agent.end("")
