@@ -193,19 +193,16 @@ app.post("/pharmacist", express.json(), (req, res) => {
   async function reviewTransactionDetails(agent) {
     //Details of the purchase
     let drugName = agent.parameters.drugName;
-    // let howMany = agent.parameters.howMany;
     let whoIsBuying = agent.parameters.buyerID;
     let deliveryDate = agent.parameters.deliveryDate;
     let deliveryTime = agent.parameters.deliveryTime;
     let deliveryAddress = agent.parameters.deliveryAddress;
     let deliveryPhone = agent.parameters.deliveryPhone;
-    // let deliveryEmail = agent.parameters.deliveryEmail;
-    // let drugPrice = agent.parameters.drugPrice;
     let paymentMethod = agent.parameters.payMethod;
     let paymentPhone = agent.parameters.paymentPhone;
 
     agent.add(
-      `Your Name: ${whoIsBuying} \nOrder: ${drugName} \nUnits: ${howMany} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nDelivery Email: ${deliveryEmail} \n Price: ${drugPrice} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
+      `Your Name: ${whoIsBuying} \nOrder: ${drugName} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
     );
 
     agent.add("Confirm transaction details?");
