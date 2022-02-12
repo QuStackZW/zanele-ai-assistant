@@ -227,8 +227,21 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let paymentMethod = agent.parameters.payMethod;
     let paymentPhone = agent.parameters.paymentPhone;
 
+    //human readable date
+    let date = new Date(deliveryDate);
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let humanReadableDate = day + "/" + month + "/" + year;
+
+    //human readable time
+    let time = new Date(deliveryTime);
+    let hour = time.getHours();
+    let minute = time.getMinutes();
+    let humanReadableTime = hour + ":" + minute;
+
     agent.add(
-      `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
+      `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${humanReadableDate} \nDelivery Time: ${humanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
     );
 
     agent.add("Confirm Transaction Details?");
