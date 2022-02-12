@@ -182,75 +182,75 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add(new Suggestion("Cosmetics"));
     agent.add(new Suggestion("Toiletries"));
   }
-  function paymentMethod(agent) {
-    agent.add("What's the payment method you're using?");
+  // function paymentMethod(agent) {
+  //   agent.add("What's the payment method you're using?");
 
-    agent.add(new Suggestion("One Money"));
-    agent.add(new Suggestion("EcoCash"));
-    agent.add(new Suggestion("MyCash"));
-  }
+  //   agent.add(new Suggestion("One Money"));
+  //   agent.add(new Suggestion("EcoCash"));
+  //   agent.add(new Suggestion("MyCash"));
+  // }
 
-  function linkedNumber(agent) {
-    agent.add(`What is your ${agent.parameters.paymentMethod} linked number?`);
-  }
-  async function reviewTransactionDetails(agent) {
-    //Details of the purchase
-    let drugName = agent.parameters.drugName;
-    let howMany = agent.parameters.howMany;
-    let whoIsBuying = agent.parameters.whoIsBuying;
-    let deliveryDate = agent.parameters.deliveryDate;
-    let deliveryTime = agent.parameters.deliveryTime;
-    let deliveryAddress = agent.parameters.deliveryAddress;
-    let deliveryPhone = agent.parameters.deliveryPhone;
-    let deliveryEmail = agent.parameters.deliveryEmail;
-    let drugPrice = agent.parameters.drugPrice;
-    let paymentMethod = agent.parameters.paymentMethod;
-    let linkedNumber = agent.parameters.linkedNumber;
+  // function linkedNumber(agent) {
+  //   agent.add(`What is your ${agent.parameters.paymentMethod} linked number?`);
+  // }
+  // async function reviewTransactionDetails(agent) {
+  //   //Details of the purchase
+  //   let drugName = agent.parameters.drugName;
+  //   let howMany = agent.parameters.howMany;
+  //   let whoIsBuying = agent.parameters.whoIsBuying;
+  //   let deliveryDate = agent.parameters.deliveryDate;
+  //   let deliveryTime = agent.parameters.deliveryTime;
+  //   let deliveryAddress = agent.parameters.deliveryAddress;
+  //   let deliveryPhone = agent.parameters.deliveryPhone;
+  //   let deliveryEmail = agent.parameters.deliveryEmail;
+  //   let drugPrice = agent.parameters.drugPrice;
+  //   let paymentMethod = agent.parameters.paymentMethod;
+  //   let linkedNumber = agent.parameters.linkedNumber;
 
-    agent.add(
-      `Your Name: ${whoIsBuying} \nOrder: ${drugName} \nUnits: ${howMany} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nDelivery Email: ${deliveryEmail} \n Price: ${drugPrice} \nPayment Method: ${paymentMethod} \nLinked Number: ${linkedNumber}`
-    );
+  //   agent.add(
+  //     `Your Name: ${whoIsBuying} \nOrder: ${drugName} \nUnits: ${howMany} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nDelivery Email: ${deliveryEmail} \n Price: ${drugPrice} \nPayment Method: ${paymentMethod} \nLinked Number: ${linkedNumber}`
+  //   );
 
-    agent.add("Confirm transaction details?");
-    agent.add(new Suggestion("Yes"));
-    agent.add(new Suggestion("No"));
-  }
+  //   agent.add("Confirm transaction details?");
+  //   agent.add(new Suggestion("Yes"));
+  //   agent.add(new Suggestion("No"));
+  // }
 
-  async function confirmTransaction(agent) {
-    let drugName = agent.parameters.drugName;
-    let units = agent.parameters.units;
-    let whoIsBuying = agent.parameters.whoIsBuying;
-    let deliveryDate = agent.parameters.deliveryDate;
-    let deliveryTime = agent.parameters.deliveryTime;
-    let deliveryAddress = agent.parameters.deliveryAddress;
-    let deliveryPhone = agent.parameters.deliveryPhone;
-    let deliveryEmail = agent.parameters.deliveryEmail;
-    let drugPrice = agent.parameters.drugPrice;
-    let paymentMethod = agent.parameters.paymentMethod;
-    let linkedNumber = agent.parameters.linkedNumber;
+  // async function confirmTransaction(agent) {
+  //   let drugName = agent.parameters.drugName;
+  //   let units = agent.parameters.units;
+  //   let whoIsBuying = agent.parameters.whoIsBuying;
+  //   let deliveryDate = agent.parameters.deliveryDate;
+  //   let deliveryTime = agent.parameters.deliveryTime;
+  //   let deliveryAddress = agent.parameters.deliveryAddress;
+  //   let deliveryPhone = agent.parameters.deliveryPhone;
+  //   let deliveryEmail = agent.parameters.deliveryEmail;
+  //   let drugPrice = agent.parameters.drugPrice;
+  //   let paymentMethod = agent.parameters.paymentMethod;
+  //   let linkedNumber = agent.parameters.linkedNumber;
 
-    db.collection("purchases")
-      .add({
-        drug: drugName,
-        units: units,
-        buyer: whoIsBuying,
-        date: deliveryDate,
-        time: deliveryTime,
-        address: deliveryAddress,
-        phone: deliveryPhone,
-        email: deliveryEmail,
-        price: drugPrice,
-        paymentMethod: paymentMethod,
-        linkedNumber: linkedNumber,
-      })
-      .then(function (docRef) {
-        agent.add("Order added successfully");
-      })
-      .catch(function (error) {
-        agent.add("Error adding document: ", error);
-      });
-    agent.add("Your order was successful");
-  }
+  //   db.collection("purchases")
+  //     .add({
+  //       drug: drugName,
+  //       units: units,
+  //       buyer: whoIsBuying,
+  //       date: deliveryDate,
+  //       time: deliveryTime,
+  //       address: deliveryAddress,
+  //       phone: deliveryPhone,
+  //       email: deliveryEmail,
+  //       price: drugPrice,
+  //       paymentMethod: paymentMethod,
+  //       linkedNumber: linkedNumber,
+  //     })
+  //     .then(function (docRef) {
+  //       agent.add("Order added successfully");
+  //     })
+  //     .catch(function (error) {
+  //       agent.add("Error adding document: ", error);
+  //     });
+  //   agent.add("Your order was successful");
+  // }
 
   // ********************************************DRUG DETAILS*****************************************************//
 
