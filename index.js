@@ -43,11 +43,11 @@ process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
 //Let's define port number
 const port = process.env.PORT || 8000;
 
-app.get("/app/:id", checkUserAuth, findApp, renderView, sendJSON);
-function checkUserAuth(req, res, next) {
-  if (req.session.user) return next();
-  return next(new NotAuthorizedError());
-}
+// app.get("/app/:id", checkUserAuth, findApp, renderView, sendJSON);
+// function checkUserAuth(req, res, next) {
+//   if (req.session.user) return next();
+//   return next(new NotAuthorizedError());
+// }
 
 app.get("/", (req, res) => {
   res.send("Your application is running with no issues!");
