@@ -465,8 +465,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
   // intentMap.set("DeliveryPhone", deliveryPhone);
   // intentMap.set("DeliveryEmail", deliveryEmail);
   // intentMap.set("DrugPrice", drugPrice);
-  intentMap.set("Payment Method", paymentMethod);
-  intentMap.set("LinkedNumber", linkedNumber);
+  // intentMap.set("Payment Method", paymentMethod);
+  // intentMap.set("LinkedNumber", linkedNumber);
   intentMap.set("Drug Order Details - next", reviewTransactionDetails);
   intentMap.set("Confirm Transaction", confirmTransaction);
   //************************************END OF DRUG PURCHASES****************************************//
