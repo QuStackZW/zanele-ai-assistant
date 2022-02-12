@@ -190,131 +190,78 @@ app.post("/pharmacist", express.json(), (req, res) => {
   //   agent.add(new Suggestion("MyCash"));
   // }
 
-  // function linkedNumber(agent) {
-  //   agent.add(`What is your ${agent.parameters.paymentMethod} linked number?`);
-  // }
-  // async function reviewTransactionDetails(agent) {
-  //   //Details of the purchase
-  //   let drugName = agent.parameters.drugName;
-  //   let howMany = agent.parameters.howMany;
-  //   let whoIsBuying = agent.parameters.whoIsBuying;
-  //   let deliveryDate = agent.parameters.deliveryDate;
-  //   let deliveryTime = agent.parameters.deliveryTime;
-  //   let deliveryAddress = agent.parameters.deliveryAddress;
-  //   let deliveryPhone = agent.parameters.deliveryPhone;
-  //   let deliveryEmail = agent.parameters.deliveryEmail;
-  //   let drugPrice = agent.parameters.drugPrice;
-  //   let paymentMethod = agent.parameters.paymentMethod;
-  //   let linkedNumber = agent.parameters.linkedNumber;
+  async function reviewTransactionDetails(agent) {
+    //Details of the purchase
+    let drugName = agent.parameters.drugName;
+    // let howMany = agent.parameters.howMany;
+    let whoIsBuying = agent.parameters.buyerID;
+    let deliveryDate = agent.parameters.deliveryDate;
+    let deliveryTime = agent.parameters.deliveryTime;
+    let deliveryAddress = agent.parameters.deliveryAddress;
+    let deliveryPhone = agent.parameters.deliveryPhone;
+    // let deliveryEmail = agent.parameters.deliveryEmail;
+    // let drugPrice = agent.parameters.drugPrice;
+    let paymentMethod = agent.parameters.payMethod;
+    let paymentPhone = agent.parameters.paymentPhone;
 
-  //   agent.add(
-  //     `Your Name: ${whoIsBuying} \nOrder: ${drugName} \nUnits: ${howMany} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nDelivery Email: ${deliveryEmail} \n Price: ${drugPrice} \nPayment Method: ${paymentMethod} \nLinked Number: ${linkedNumber}`
-  //   );
+    agent.add(
+      `Your Name: ${whoIsBuying} \nOrder: ${drugName} \nUnits: ${howMany} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nDelivery Email: ${deliveryEmail} \n Price: ${drugPrice} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
+    );
 
-  //   agent.add("Confirm transaction details?");
-  //   agent.add(new Suggestion("Yes"));
-  //   agent.add(new Suggestion("No"));
-  // }
+    agent.add("Confirm transaction details?");
+    agent.add(new Suggestion("Yes"));
+    agent.add(new Suggestion("No"));
+  }
 
-  // async function confirmTransaction(agent) {
-  //   let drugName = agent.parameters.drugName;
-  //   let units = agent.parameters.units;
-  //   let whoIsBuying = agent.parameters.whoIsBuying;
-  //   let deliveryDate = agent.parameters.deliveryDate;
-  //   let deliveryTime = agent.parameters.deliveryTime;
-  //   let deliveryAddress = agent.parameters.deliveryAddress;
-  //   let deliveryPhone = agent.parameters.deliveryPhone;
-  //   let deliveryEmail = agent.parameters.deliveryEmail;
-  //   let drugPrice = agent.parameters.drugPrice;
-  //   let paymentMethod = agent.parameters.paymentMethod;
-  //   let linkedNumber = agent.parameters.linkedNumber;
+  async function confirmTransaction(agent) {
+    //Details of the purchase
+    let drugName = agent.parameters.drugName;
+    // let howMany = agent.parameters.howMany;
+    let whoIsBuying = agent.parameters.buyerID;
+    let deliveryDate = agent.parameters.deliveryDate;
+    let deliveryTime = agent.parameters.deliveryTime;
+    let deliveryAddress = agent.parameters.deliveryAddress;
+    let deliveryPhone = agent.parameters.deliveryPhone;
+    // let deliveryEmail = agent.parameters.deliveryEmail;
+    // let drugPrice = agent.parameters.drugPrice;
+    let paymentMethod = agent.parameters.payMethod;
+    let paymentPhone = agent.parameters.paymentPhone;
 
-  //   db.collection("purchases")
-  //     .add({
-  //       drug: drugName,
-  //       units: units,
-  //       buyer: whoIsBuying,
-  //       date: deliveryDate,
-  //       time: deliveryTime,
-  //       address: deliveryAddress,
-  //       phone: deliveryPhone,
-  //       email: deliveryEmail,
-  //       price: drugPrice,
-  //       paymentMethod: paymentMethod,
-  //       linkedNumber: linkedNumber,
-  //     })
-  //     .then(function (docRef) {
-  //       agent.add("Order added successfully");
-  //     })
-  //     .catch(function (error) {
-  //       agent.add("Error adding document: ", error);
-  //     });
-  //   agent.add("Your order was successful");
-  // }
+    db.collection("purchases")
+      .add({
+        drug: drugName,
+        buyer: whoIsBuying,
+        date: deliveryDate,
+        time: deliveryTime,
+        address: deliveryAddress,
+        phone: deliveryPhone,
+        paymentMethod: paymentMethod,
+        paymentPhone: paymentPhone,
+      })
+      .then(function (docRef) {
+        agent.add("Order added successfully");
+      })
+      .catch(function (error) {
+        agent.add("Error adding document: ", error);
+      });
+    agent.add("Your order was successful");
+  }
 
   // ********************************************DRUG DETAILS*****************************************************//
 
-  //User wants to purchase either of the 3 options
-  // User inputs his or her details as prompted
-  // UseMapr inputs the amount of the purchase
-  // User inputs the payment method
-  // User inputs the delivery address
-  // User inputs the delivery date
-  // User inputs the delivery time
-  // User inputs the delivery instructions
-  // User inputs the delivery phone number
-  // User inputs the delivery email
-
-  //Adding new drugs into database;
-  //User inputs the drug name
-  //User inputs the drug price
-  //User inputs the drug category
-  //user inputs the drug manufacturer
-  //User inputs the drug Administering instructions
-  //User inputs the drug image
-  //Save data to the database;
-
-  // function nameOfDrug(agent) {
-  //   agent.add("What's the name of the drug you want to add?");
-  // }
-
-  // function priceOfDrug(agent) {
-  //   agent.add("How much does the drug cost?");
-  // }
-
-  // function drugCategory(agent) {
-  //   //  Central Nervous System (CNS) Depressants. CNS depressants slow down the operations of the brain and the body. ...
-  //   //  CNS Stimulants. ...
-  //   //  Hallucinogens. ...
-  //   //  Dissociative Anesthetics. ...
-  //   //  Narcotic Analgesics. ...
-  //   //  Inhalants. ...
-  //   //  Cannabis.
-  //   agent.add("What's the category of the drug?");
-  // }
-
-  // function drugManufacturer(agent) {
-  //   agent.add("Who is the manufacturer of the drug?");
-  // }
-  // function drugAdministeringType(agent) {
-  //   // Oral route.
-  //   // Sublingual/ Buccal route.
-  //   // Rectal route.
-  //   // Topical route.
-  //   // Transdermal route.
-  //   // Inhalational route/ pulmonary route.
-  //   // Injection route.
-  //   // Oral administration. This is the most frequently used route of drug administration and is the most convenient and economic. ...
-  //   // Sublingual. ...
-  //   // Rectal administration. ...
-  //   // Topical administration. ...
-  //   // Parenteral administration. ...
-  //   // Intravenous injection.
-  //   agent.add("How is the drug administered?");
-  // }
-  // function drugImage(agent) {
-  //   agent.add("What's the image of the drug?");
-  // }
+  // Oral route.
+  // Sublingual/ Buccal route.
+  // Rectal route.
+  // Topical route.
+  // Transdermal route.
+  // Inhalational route/ pulmonary route.
+  // Injection route.
+  // Oral administration. This is the most frequently used route of drug administration and is the most convenient and economic. ...
+  // Sublingual. ...
+  // Rectal administration. ...
+  // Topical administration. ...
+  // Parenteral administration. ...
+  // Intravenous injection.
 
   async function drugHandler(agent) {
     let name = agent.parameters.name;
@@ -520,8 +467,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
   // intentMap.set("DrugPrice", drugPrice);
   intentMap.set("Payment Method", paymentMethod);
   intentMap.set("LinkedNumber", linkedNumber);
-  intentMap.set("Review Transaction Details", reviewTransactionDetails);
-  intentMap.set("Review Transaction Details - yes", confirmTransaction);
+  intentMap.set("Drug Order Details - next", reviewTransactionDetails);
+  intentMap.set("Confirm Transaction", confirmTransaction);
   //************************************END OF DRUG PURCHASES****************************************//
   agent.handleRequest(intentMap);
 });
