@@ -3,7 +3,7 @@
 //Date: 2/2/2022
 //Description: Chatbot for healthcare
 
-"use --trace-warnings";
+"use strict";
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -15,6 +15,8 @@ const moment = require("moment");
 const { WebhookClient } = require("dialogflow-fulfillment");
 const { Card, Suggestion } = require("dialogflow-fulfillment");
 const token = "testing"; //verification token
+
+moment().format("LLL");
 
 var admin = require("firebase-admin");
 
