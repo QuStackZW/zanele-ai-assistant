@@ -531,10 +531,10 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("Mock Up Demo", testing);
 
   //***************************DATABASE TESTING********************************************//
-  intentMap.set("What is your name", whatIsYourName);
-  intentMap.set("What is your age", whatIsYourAge);
-  intentMap.set("Confirm Personal Details", confirmPersonalDetails);
-  intentMap.set("Save User Details", saveUserDetails);
+  // intentMap.set("What is your name", whatIsYourName);
+  // intentMap.set("What is your age", whatIsYourAge);
+  // intentMap.set("Confirm Personal Details", confirmPersonalDetails);
+  // intentMap.set("Save User Details", saveUserDetails);
   //********************************DATABASE TESTING********************************************//
 
   //***************************USER ACCOUNT********************************************//
