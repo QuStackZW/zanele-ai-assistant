@@ -231,7 +231,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
       `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${deliveryDate} \nDelivery Time: ${deliveryTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
     );
 
-    agent.add("Confirm transaction details?");
+    agent.add("Confirm Transaction Details?");
     agent.add(new Suggestion("Yes"));
     agent.add(new Suggestion("No"));
 
