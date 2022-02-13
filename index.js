@@ -440,7 +440,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   async function searchDrugs(agent) {
     //search db and see which drugs are available
     const drugsRef = db.collection("drugs");
-    const snapshot = await drugsRef.where("name", "==", true).get();
+    const snapshot = await drugsRef.where("name", "==", "painstop").get();
     if (snapshot.empty) {
       agent.add("No drugs available.");
       console.log("No drugs available.");
