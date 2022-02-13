@@ -346,9 +346,9 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add("Your drug was added successfully");
   }
 
-  // ********************************************END DRUG DETAILS*****************************************************//
+  // *********************************************END DRUG DETAILS*******************************************************//
 
-  // *********************************************USER ACCOUNT DETAILS*******************************************************//
+  // ********************************************USER ACCOUNT DETAILS****************************************************//
 
   //Get the user's fullname
   //Get the user's date of birth
@@ -374,8 +374,11 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let nationalID = agent.parameters.nationalID;
     let gender = agent.parameters.gender;
 
+    //save a user's age in years using moment.js fromNow() not as a date format
+    let momentAge = moment(age, "YYYYMMDD").fromNow();
+
     console.log(
-      `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \n age: ${age} \nNational ID ${nationalID} ${gender}`
+      `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \n age: ${momentAge} \nNational ID ${nationalID} ${gender}`
     );
 
     return db
@@ -385,7 +388,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
         city: city,
         address: address,
         phone: phone,
-        birthday: age,
+        birthday: momentAge,
         nationalID: nationalID,
         gender: gender,
       })
