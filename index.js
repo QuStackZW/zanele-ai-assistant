@@ -423,21 +423,40 @@ app.post("/pharmacist", express.json(), (req, res) => {
         });
       });
   }
-  // *********************************************END OF FETCH DRUGS FROM DB*******************************************************//
-  // ******************************************** SEARCH AVAILABLE DRUGS FROM DB***********************************************//
-  // function searchDrugs(agent) {
-  //   //search db and see which drugs are available
-  //   db.collection("drugs")
+
+  // //Return all available drugs in the database
+  // async function getDrugs(agent) {
+  //   let drugs = await db
+  //     .collection("drugs")
   //     .get()
   //     .then((snapshot) => {
   //       snapshot.forEach((doc) => {
-  //         agent.add(doc.data().name);
+  //         if (drugs.size == 0) {
+  //           agent.add("No drugs available");
+  //         } else {
+  //           agent.add(doc.data());
+  //         }
   //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log("Error getting documents", err);
   //     });
   // }
+
+  // *********************************************END OF FETCH DRUGS FROM DB*******************************************************//
+  // ******************************************** SEARCH AVAILABLE DRUGS FROM DB***********************************************//
+  async function searchDrugs(agent) {
+    //search db and see which drugs are available
+    let drugs = await db
+      .collection("drugs")
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          if (drugs.size == 0) {
+            agent.add("No drugs available");
+          } else {
+            agent.add(doc.data());
+          }
+        });
+      });
+  }
 
   // ******************************************END OF SEARCH AVAILABLE DRUGS*******************************************//
 
@@ -507,7 +526,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   //************************************DRUG PURCHASES******************************************//
 
   //************************************SEARCH DRUGS******************************************//
-  // intentMap.set("Search Drugs", searchDrugs);
+  intentMap.set("Search All Drugs", searchDrugs);
   intentMap.set("getDrug", getDrug);
   //************************************END OF SEARCH DRUGS******************************************//
 
