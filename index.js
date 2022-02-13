@@ -416,7 +416,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     doc.forEach((drug) => {
       drugs.push(drug.data());
     });
-    agent.add(`Here are the drugs available: ${drugs}`);
+    agent.add(`Here are the drugs available: ${drugs.name}`);
   }
 
   // //Return all available drugs in the database
