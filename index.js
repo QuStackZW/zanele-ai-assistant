@@ -505,7 +505,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   //************************************DRUG PURCHASES******************************************//
 
   //************************************SEARCH DRUGS******************************************//
-  intentMap.set("Search Drugs", searchDrugs);
+  // intentMap.set("Search Drugs", searchDrugs);
   intentMap.set("getDrug", getDrug);
   //************************************END OF SEARCH DRUGS******************************************//
 
