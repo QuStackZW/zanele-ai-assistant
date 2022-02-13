@@ -410,40 +410,24 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   // *********************************************FETCH DRUGS FROM DB*******************************************************//
   async function getDrug(agent) {
-    const drugRef = db.collection("drugs");
+    const drugRef = db.collection("drugs").doc("Bioplus");
     const doc = await drugRef.get();
     const drugs = [];
     doc.forEach((drug) => {
       drugs.push(drug.data());
     });
-    agent.add(`Here are the drugs available: ${drugs.name}`);
+    agent.add(`Here are the drugs available: ${drugs}`);
   }
-
-  // //Return all available drugs in the database
-  // async function getDrugs(agent) {
-  //   let drugs = await db
-  //     .collection("drugs")
-  //     .get()
-  //     .then((snapshot) => {
-  //       snapshot.forEach((doc) => {
-  //         if (drugs.size == 0) {
-  //           agent.add("No drugs available");
-  //         } else {
-  //           agent.add(doc.data());
-  //         }
-  //       });
-  //     });
-  // }
 
   // *********************************************END OF FETCH DRUGS FROM DB*******************************************************//
   // ******************************************** SEARCH AVAILABLE DRUGS FROM DB***********************************************//
   async function searchDrugs(agent) {
     //search db and see which drugs are available
     const drugsRef = db.collection("drugs");
-    const snapshot = await drugsRef.where("name", "==", "painstop").get();
+    const snapshot = await drugsRef.where("name", "==", true).get();
     if (snapshot.empty) {
-      agent.add("No drugs available.");
       console.log("No drugs available.");
+      agent.add("No drugs available.");
     } else {
       snapshot.forEach((doc) => {
         agent.add(doc.data());
