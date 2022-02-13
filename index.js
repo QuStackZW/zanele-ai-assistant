@@ -442,6 +442,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     if (snapshot.empty) {
       console.log("No drugs available.");
       agent.add("No drugs available.");
+      return;
     } else {
       snapshot.forEach((doc) => {
         agent.add(`${doc.data().name}`);
