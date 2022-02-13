@@ -357,6 +357,11 @@ app.post("/pharmacist", express.json(), (req, res) => {
   //Get the user's telephone number
   // Get the user's home Address
   //Get the user's City/town
+  function registerAccount(agent) {
+    agent.add(
+      "We use a pharmacy standard registration form to register your account. Please fill in the form below."
+    );
+  }
 
   function userAccount(agent) {
     let person = agent.parameters.person;
@@ -474,7 +479,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
   // intentMap.set("Save User Details", saveUserDetails);
   //********************************DATABASE TESTING********************************************//
 
-  //***************************USER ACCOUNT********************************************//
+  //***************************************USER ACCOUNT********************************************//
+  intentMap.set("Register Account", registerAccount);
   intentMap.set("User Account", userAccount);
   //********************************END OF USER ACCOUNT********************************************//
 
