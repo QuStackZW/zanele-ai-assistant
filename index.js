@@ -410,15 +410,17 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   // *********************************************FETCH DRUGS FROM DB*******************************************************//
   async function getDrug(agent) {
-    db.collection("drugs")
+    let drug = await db
+      .collection("drugs")
       .get()
       .then((snapshot) => {
         snapshot.forEach((doc) => {
-          agent.add(doc.data().name);
+          if (drug.size == 0) {
+            agent.add("No drugs available");
+          } else {
+            agent.add(doc.data());
+          }
         });
-      })
-      .catch((err) => {
-        console.log("Error getting documents", err);
       });
   }
   // *********************************************END OF FETCH DRUGS FROM DB*******************************************************//
