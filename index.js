@@ -406,7 +406,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
       );
   }
 
-  // ********************************************* END OF USER ACCOUNT DETAILS*******************************************************//
+  // ******************************************** END OF USER ACCOUNT DETAILS***********************************************//
 
   // *********************************************FETCH DRUGS FROM DB*******************************************************//
   function getDrugs(agent) {
@@ -422,50 +422,27 @@ app.post("/pharmacist", express.json(), (req, res) => {
       });
   }
   // *********************************************END OF FETCH DRUGS FROM DB*******************************************************//
-
-  // *********************************************TEST IF IT SAVES TO DB*******************************************************//
-  function whatIsYourName(agent) {
-    agent.add("What is your name?");
-  }
-
-  function whatIsYourAge(agent) {
-    agent.add("How old are you?");
-  }
-
-  function confirmPersonalDetails() {
-    const name = agent.context.get("getName").parameters.name;
-    const age = agent.context.get("getAge").parameters.age;
-    agent.add(`Your name is ${name} and you are ${age} years old`);
-    agent.add("Confirm");
-
-    agent.add(new Suggestion("Yes"));
-    agent.add(new Suggestion("No"));
-  }
-  async function saveUserDetails(agent) {
-    const name = agent.context.get("getName").parameters.name; //User's name");
-    const age = agent.context.get("getAge").parameters.age; //User's age");
-    // let name = agent.parameters.name;
-    // let age = agent.parameters.age;
-
-    return db
-      .collection("users")
-      .add({
-        name: name,
-        age: age,
+  // ******************************************** SEARCH AVAILABLE DRUGS FROM DB***********************************************//
+  function searchDrugs(agent) {
+    //search db and see which drugs are available
+    db.collection("drugs")
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          agent.add(doc.data().name);
+        });
       })
-      .then((ref) => {
-        agent.add(
-          `User details saved successfully. The Reference ID is ${ref.id}`
-        );
-        console.log(`Successfully added: ${ref.id}`);
-        agent.add(new Suggestion("Get Started"));
-        agent.add(new Suggestion("Search for drugs"));
-      })
-      .catch(function (error) {
-        console.error("Error adding document: ", error);
+      .catch((err) => {
+        console.log("Error getting documents", err);
       });
   }
-  // **************************************END OF TEST IF IT SAVES TO DB*************************************//
+
+  // ******************************************END OF SEARCH AVAILABLE DRUGS*******************************************//
+
+  // ******************************************UNIVERSAL CANCEL INTENT***********************************************//
+  function cancel(agent) {
+    agent.add("Goodbye");
+  }
 
   // ******************************************FALLBACK INTENT***********************************************//
   function fallback(agent) {
@@ -479,6 +456,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("Default Welcome Intent", welcome);
   intentMap.set("Default Fallback Intent", fallback);
   intentMap.set("Mock Up Demo", testing);
+  intentMap.set("Universal Cancel Intent", cancel);
 
   //***************************DATABASE TESTING********************************************//
   // intentMap.set("What is your name", whatIsYourName);
@@ -524,7 +502,12 @@ app.post("/pharmacist", express.json(), (req, res) => {
   //*******************************DRUGS THE PHARMACY HAS IN-STOCK********************************//
   intentMap.set("Drug Details", drugHandler);
 
-  //************************************DRUG PURCHASES****************************************//
+  //************************************DRUG PURCHASES******************************************//
+
+  //************************************SEARCH DRUGS******************************************//
+  intentMap.set("Search Drugs", searchDrugs);
+  //************************************END OF SEARCH DRUGS******************************************//
+
   intentMap.set("Make a purchase", makeAPurchase);
   intentMap.set("Drug Order Details", reviewTransactionDetails);
   // intentMap.set("Confirm Transaction", confirmTransaction);
@@ -532,9 +515,9 @@ app.post("/pharmacist", express.json(), (req, res) => {
   agent.handleRequest(intentMap);
 });
 
-//**************************************************END OF INTENT MAPS AS DEFINED BY THE CODE AND DIALOGFLOW*****************************************************//
+//*********************END OF INTENT MAPS AS DEFINED BY THE CODE AND DIALOGFLOW***************************//
 
-//**************************************************APP LISTEN*****************************************************//
+//***********************************APP LISTEN************************************//
 app.listen(port, () => {
   console.log(`Chatbot Webhook is listening on port ${port}`);
   console.log("press Ctrl+C to cancel");
