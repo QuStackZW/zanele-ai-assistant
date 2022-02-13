@@ -74,12 +74,12 @@ app.post("/pharmacist", express.json(), (req, res) => {
       "Hello there. I am Zanele, your awesome virtual assistant pharmacist! I can assist you with the following"
     );
     agent.add(
-      "1. Ask a medical or pharmaceutical related question. \n2. Buy over-the-counter medicine or any of our products \n3. Add Drug"
+      "1. Ask a medical or pharmaceutical related question. \n2. Buy over-the-counter medicine or any of our products \n3. Register to be a member of the pharmacy"
     );
 
     agent.add(new Suggestion("Ask Question"));
     agent.add(new Suggestion("Add to Cart"));
-    agent.add(new Suggestion("Add Drug"));
+    agent.add(new Suggestion("Register"));
   }
 
   function askPharmacyOrMedicalQuestion(agent) {
@@ -353,15 +353,15 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   // *********************************************USER ACCOUNT DETAILS*******************************************************//
 
-  function userAccount(agent) {
-    //Get the user's fullname
-    //Get the user's date of birth
-    //Get the user's national identification number'
-    //Get the user's Gender
-    //Get the user's telephone number
-    // Get the user's home Address
-    //Get the user's City/town
+  //Get the user's fullname
+  //Get the user's date of birth
+  //Get the user's national identification number'
+  //Get the user's Gender
+  //Get the user's telephone number
+  // Get the user's home Address
+  //Get the user's City/town
 
+  function userAccount(agent) {
     let person = agent.parameters.person;
     let city = agent.parameters.city;
     let address = agent.parameters.address;
