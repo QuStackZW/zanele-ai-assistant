@@ -420,7 +420,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   // }
 
   async function getDrug(agent) {
-    const drugRef = db.collection("drugs");
+    const drugRef = db.collection("drugs").doc("painstop");
     const doc = await drugRef.get();
     if (!doc.exists) {
       agent.add("No drug with that name available");
@@ -446,6 +446,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
       snapshot.forEach((doc) => {
         agent.add(`${doc.data().name}`);
         console.log(doc.id, "=>", doc.data());
+        agent.add(doc.id, "=>", doc.data());
       });
     }
   }
