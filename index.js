@@ -71,10 +71,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   function welcome(agent) {
     agent.add(
-      "Hello there. I am Zanele, your awesome virtual assistant pharmacist! I can assist you with the following"
-    );
-    agent.add(
-      "1. Ask a medical or pharmaceutical related question. \n2. Buy over-the-counter medicine or any of our products \n3. Register to be a member of the pharmacy"
+      "Hello there. I am Zanele, your awesome virtual assistant pharmacist! My task is to assist you with the following functions. Go ahead and have fun. \n\n1. Ask a medical or pharmaceutical related question. \n2. Buy over-the-counter medicine or any of our products \n3. Register to be a member of the pharmacy"
     );
 
     agent.add(new Suggestion("Ask Question"));
