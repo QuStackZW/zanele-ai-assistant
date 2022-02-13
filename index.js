@@ -409,7 +409,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   // ******************************************** END OF USER ACCOUNT DETAILS***********************************************//
 
   // *********************************************FETCH DRUGS FROM DB*******************************************************//
-  function getDrug(agent) {
+  async function getDrug(agent) {
     db.collection("drugs")
       .get()
       .then((snapshot) => {
