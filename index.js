@@ -378,7 +378,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let momentAge = moment(age, "YYYYMMDD").fromNow();
 
     console.log(
-      `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \n age: ${momentAge} \nNational ID ${nationalID} ${gender}`
+      `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \nAge: ${momentAge} \nNational ID: ${nationalID} \nSex: ${gender}`
     );
 
     return db
@@ -398,7 +398,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
           `Thank you ${person.name}. You have been successfully registered`
         ),
         agent.add(
-          `Name: ${person} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \n age: ${momentAge} \nNational ID ${nationalID} ${gender}`
+          `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \nAge: ${momentAge} \nNational ID ${nationalID} Sex: ${gender}`
         ),
         agent.add(new Suggestion("Ask Question")),
         agent.add(new Suggestion("Add to Cart")),
@@ -409,7 +409,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   // ******************************************** END OF USER ACCOUNT DETAILS***********************************************//
 
   // *********************************************FETCH DRUGS FROM DB*******************************************************//
-  function getDrugs(agent) {
+  function getDrug(agent) {
     db.collection("drugs")
       .get()
       .then((snapshot) => {
@@ -423,19 +423,19 @@ app.post("/pharmacist", express.json(), (req, res) => {
   }
   // *********************************************END OF FETCH DRUGS FROM DB*******************************************************//
   // ******************************************** SEARCH AVAILABLE DRUGS FROM DB***********************************************//
-  function searchDrugs(agent) {
-    //search db and see which drugs are available
-    db.collection("drugs")
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          agent.add(doc.data().name);
-        });
-      })
-      .catch((err) => {
-        console.log("Error getting documents", err);
-      });
-  }
+  // function searchDrugs(agent) {
+  //   //search db and see which drugs are available
+  //   db.collection("drugs")
+  //     .get()
+  //     .then((snapshot) => {
+  //       snapshot.forEach((doc) => {
+  //         agent.add(doc.data().name);
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log("Error getting documents", err);
+  //     });
+  // }
 
   // ******************************************END OF SEARCH AVAILABLE DRUGS*******************************************//
 
@@ -506,6 +506,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   //************************************SEARCH DRUGS******************************************//
   intentMap.set("Search Drugs", searchDrugs);
+  intentMap.set("getDrug", getDrug);
   //************************************END OF SEARCH DRUGS******************************************//
 
   intentMap.set("Make a purchase", makeAPurchase);
