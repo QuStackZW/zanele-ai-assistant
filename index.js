@@ -398,7 +398,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
           `Thank you ${person.name}. You have been successfully registered`
         ),
         agent.add(
-          `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \nAge: ${momentAge} \nNational ID ${nationalID} Sex: ${gender}`
+          `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \nAge: ${momentAge} \nNational ID ${nationalID} \nSex: ${gender}`
         ),
         agent.add(new Suggestion("Ask Question")),
         agent.add(new Suggestion("Add to Cart")),
