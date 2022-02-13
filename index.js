@@ -410,7 +410,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   // *********************************************FETCH DRUGS FROM DB*******************************************************//
   async function getDrug(agent) {
-    const drugRef = db.collection("drugs").doc("drugs");
+    const drugRef = db.collection("drugs");
     const doc = await drugRef.get();
     const drugs = [];
     doc.forEach((drug) => {
@@ -438,7 +438,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
   async function searchDrugs(agent) {
     //search db and see which drugs are available
     const drugsRef = db.collection("drugs");
-    const snapshot = await drugsRef.where("name", "==", true).get();
+    const snapshot = await drugsRef.where("name", "===", true).get();
     if (snapshot.empty) {
       console.log("No drugs available.");
       agent.add("No drugs available.");
