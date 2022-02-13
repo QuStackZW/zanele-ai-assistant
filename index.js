@@ -359,8 +359,10 @@ app.post("/pharmacist", express.json(), (req, res) => {
   //Get the user's City/town
   function registerAccount(agent) {
     agent.add(
-      "We use a pharmacy standard registration form to register your account. Please fill in the form below."
+      "We use a pharmacy standard registration form to register your account. Please proceed to fill in the form below."
     );
+    agent.add(new Suggestion("Yes"));
+    agent.add(new Suggestion("No"));
   }
 
   function userAccount(agent) {
