@@ -412,11 +412,12 @@ app.post("/pharmacist", express.json(), (req, res) => {
   async function getDrug(agent) {
     const drugRef = db.collection("drugs");
     const doc = await drugRef.get();
-    const drugs = [];
-    doc.forEach((drug) => {
-      drugs.push(drug.data());
-    });
-    agent.add(`Here are the drugs available: ${drugs.name}`);
+    if (!doc.exists) {
+      console.log("No such document!");
+    } else {
+      console.log("Document data:", doc.data());
+      agent.add(doc.data());
+    }
   }
 
   // async function getDrug(agent) {
