@@ -311,7 +311,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
           `Thank you ${person.name}. You have been successfully registered. Please save your user ID: ${userID} you'll use it whenever you want to make a purchase.`
         ),
         agent.add(
-          `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \nAge: ${momentAge} \nNational ID ${nationalID} \nSex: ${gender}`
+          `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \nAge: ${momentAge} \nNational ID ${nationalID} \nSex: ${gender} \nUser ID ${userID}`
         ),
         agent.add(new Suggestion("Ask Question")),
         agent.add(new Suggestion("Add to Cart")),
