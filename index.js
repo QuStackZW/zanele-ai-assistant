@@ -272,19 +272,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
   }
 
   function generateUniqueUserID() {
-    //An array of possible characters to use, the alphabet is used to ensure that the ID is not easily guessed
-    let chars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-    //An array to store the generated ID
-    let id = [];
-    //The first character in the ID is a random character from the chars array
-    id.push(chars[Math.floor(Math.random() * chars.length)]);
-    //The next characters in the ID are random numbers
-    for (let i = 0; i < 7; i++) {
-      id.push(Math.floor(Math.random() * 1000000));
-    }
-    //The ID is joined to form a string
-    let uniqueID = id.join("");
-    return uniqueID;
+    let userID = Math.floor(Math.random() * 1000000);
+    return userID;
   }
 
   function userAccount(agent) {
