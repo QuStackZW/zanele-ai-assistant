@@ -9,9 +9,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express().use(bodyParser.json()); // creates express http server
 const moment = require("moment");
-// const myApp = dialogflow({ debug: true });
-// const { initializeApp } = require("firebase-admin/app");
-// const functions = require("firebase-functions");
 const { WebhookClient } = require("dialogflow-fulfillment");
 const { Card, Suggestion } = require("dialogflow-fulfillment");
 const token = "testing"; //verification token
@@ -42,12 +39,6 @@ process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
 
 //Let's define port number
 const port = process.env.PORT || 8000;
-
-// app.get("/app/:id", checkUserAuth, findApp, renderView, sendJSON);
-// function checkUserAuth(req, res, next) {
-//   if (req.session.user) return next();
-//   return next(new NotAuthorizedError());
-// }
 
 app.get("/", (req, res) => {
   res.send("Your application is running with no issues!");
@@ -88,12 +79,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
       "Your blood pressure can fluctuate throughout the day. For example, it may go up monetarily if you see your idol. Or go down, depending on your situation and point of view. \n\nHowever, having elevated blood pressure over longer periods of time puts you at higher risk for all kinds of problems including heart attacks and stroke. Your first option should never be medications, unless it is an emergency situation. Lifestyle modification should come first such as reducing your sodium intake, losing weight, getting more exercise, limiting alcohol intake, reducing stress, meditating, and listening to some relaxing music. Don't try to manage your blood pressure on your own."
     );
   }
-
-  // function whatIsKeto(agent) {
-  //   agent.add(
-  //     "The “Keto” Diet is short for ketogenic. The ketogenic diet is a low-carbohydrate, higher fat diet with fat consisting of as much as 90% of the caloric intake. Yes, you heard that correctly, after years of people recommending low fat diets, a high-fat diet is now being pushed. What’s the theory behind this? Well, depriving your body of carbohydrates is supposed to switch your body from relying on sugar from carbs for fuel to relying on ketone bodies that result when your liver burns fat that is stored in your body. Burning fat in theory sounds good. The relative simplicity of this explanation and the observation that people can lose weight in the short term from this diet has led to a business boom, with many pushing keto products like books, seminars, and foods. \n\nBut is keto just a fad or is there some meat (and bacon and cheese) to it? Well, the jury is still out on the keto diet as not enough longer-term scientific studies have been done to determine if it is an effective and healthy way of losing weight and maintaining weight loss. The diet certainly has some potential risks such as not getting enough of the nutrients that you would normally get from fruits, vegetables, and grains, overtaxing your liver and kidneys, constipation, and your constantly telling other people that you are on the keto diet. Plus, some may find the diet tough to maintain. Again, this is a case of the science needing to catch up to the hype."
-  //   );
-  // }
 
   function howToGetRidOfHiccups(agent) {
     agent.add(
@@ -171,42 +156,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add(new Suggestion("Cosmetics"));
     agent.add(new Suggestion("Toiletries"));
   }
-  // function paymentMethod(agent) {
-  //   agent.add("What's the payment method you're using?");
-
-  //   agent.add(new Suggestion("One Money"));
-  //   agent.add(new Suggestion("EcoCash"));
-  //   agent.add(new Suggestion("MyCash"));
-  // }
 
   async function reviewTransactionDetails(agent) {
-    //   const order = agent.context.get("DrugOrderDetails-followup").parameters;
-    //   drugName = order.drugName;
-    //   whoIsBuying = order.buyerID;
-    //   deliveryDate = order.deliveryDate;
-    //   deliveryTime = order.deliveryTime;
-    //   deliveryAddress = order.deliveryAddress;
-    //   deliveryPhone = order.deliveryPhone;
-    //   paymentMethod = order.payMethod;
-    //   paymentPhone = order.paymentPhone;
-
-    // let name = agent.context.get("DrugOrderDetails-followup").parameters
-    //   .drugName;
-    // let buyer = agent.context.get("DrugOrderDetails-followup").parameters
-    //   .buyerID;
-    // let date = agent.context.get("DrugOrderDetails-followup").parameters
-    //   .deliveryDate;
-    // let time = agent.context.get("DrugOrderDetails-followup").parameters
-    //   .deliveryTime;
-    // let address = agent.context.get("DrugOrderDetails-followup").parameters
-    //   .deliveryAddress;
-    // let phone = agent.context.get("DrugOrderDetails-followup").parameters
-    //   .deliveryPhone;
-    // let payMethod = agent.context.get("DrugOrderDetails-followup").parameters
-    //   .payMethod;
-    // let payPhone = agent.context.get("DrugOrderDetails-followup").parameters
-    //   .paymentPhone;
-
     let drugName = agent.parameters.drugName;
     let whoIsBuying = agent.parameters.buyerID;
     let deliveryDate = agent.parameters.deliveryDate;
@@ -215,19 +166,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let deliveryPhone = agent.parameters.deliveryPhone;
     let paymentMethod = agent.parameters.payMethod;
     let paymentPhone = agent.parameters.paymentPhone;
-
-    //human readable date
-    // let date = new Date(deliveryDate);
-    // let day = date.getDate();
-    // let month = date.getMonth() + 1;
-    // let year = date.getFullYear();
-    // let humanReadableDate = day + "/" + month + "/" + year;
-
-    //human readable time
-    // let time = new Date(deliveryTime);
-    // let hour = time.getHours();
-    // let minute = time.getMinutes();
-    // let humanReadableTime = hour + ":" + minute;
 
     //human readable date using moment.js
     let momentDate = moment(deliveryDate, "YYYY-MM-DD HH:mm:ss").toDate();
@@ -257,38 +195,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
         buyer: whoIsBuying,
         date: momentHumanReadableDate,
         time: momentHumanReadableTime,
-        address: deliveryAddress,
-        phone: deliveryPhone,
-        paymentMethod: paymentMethod,
-        paymentPhone: paymentPhone,
-      })
-      .then(function (docRef) {
-        agent.add("Order added successfully");
-      })
-      .catch(function (error) {
-        agent.add("Error adding document: ", error);
-      });
-    agent.add("Your order was successful");
-  }
-
-  //Change to Track Transaction
-
-  async function confirmTransaction(agent) {
-    let drugName = agent.parameters.drugName;
-    let whoIsBuying = agent.parameters.buyerID;
-    let deliveryDate = agent.parameters.deliveryDate;
-    let deliveryTime = agent.parameters.deliveryTime;
-    let deliveryAddress = agent.parameters.deliveryAddress;
-    let deliveryPhone = agent.parameters.deliveryPhone;
-    let paymentMethod = agent.parameters.payMethod;
-    let paymentPhone = agent.parameters.paymentPhone;
-
-    db.collection("purchases")
-      .add({
-        drug: drugName,
-        buyer: whoIsBuying,
-        date: deliveryDate,
-        time: deliveryTime,
         address: deliveryAddress,
         phone: deliveryPhone,
         paymentMethod: paymentMethod,
@@ -421,20 +327,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
     }
   }
 
-  // async function getDrug(agent) {
-  //   const drugRef = db.collection("drugs");
-  //   const doc = await drugRef.get();
-  //   if (!doc.exists) {
-  //     agent.add("No drug with that name available");
-  //     console.log("No drug with that name available");
-  //   } else {
-  //     agent.add("Here are the drugs available: ");
-  //     doc.forEach((drug) => {
-  //       agent.add(`${drug.data().name}`);
-  //     });
-  //   }
-  // }
-
   // *********************************************END OF FETCH DRUGS FROM DB*******************************************************//
   // ******************************************** SEARCH AVAILABLE DRUGS FROM DB***********************************************//
   async function searchDrugs(agent) {
@@ -472,13 +364,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("Default Fallback Intent", fallback);
   intentMap.set("Mock Up Demo", testing);
   intentMap.set("Universal Cancel Intent", cancel);
-
-  //***************************DATABASE TESTING********************************************//
-  // intentMap.set("What is your name", whatIsYourName);
-  // intentMap.set("What is your age", whatIsYourAge);
-  // intentMap.set("Confirm Personal Details", confirmPersonalDetails);
-  // intentMap.set("Save User Details", saveUserDetails);
-  //********************************DATABASE TESTING********************************************//
 
   //***************************************USER ACCOUNT********************************************//
   intentMap.set("Register Account", registerAccount);
