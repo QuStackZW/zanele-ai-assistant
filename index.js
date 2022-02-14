@@ -414,9 +414,10 @@ app.post("/pharmacist", express.json(), (req, res) => {
     const doc = await drugRef.get();
     if (!doc.exists) {
       console.log("No such document!");
+      agent.add(`We do not have ${drugs} in stock!`);
     } else {
       console.log("Document data:", doc.data());
-      agent.add(doc.data());
+      agent.add(`${doc.data()}`);
     }
   }
 
