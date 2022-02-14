@@ -445,9 +445,9 @@ app.post("/pharmacist", express.json(), (req, res) => {
       return;
     } else {
       snapshot.forEach((doc) => {
-        // agent.add(`${doc.data().name}`);
+        agent.add(`${doc.data().name}`);
         console.log(doc.id, "=>", doc.data());
-        agent.add(doc.data());
+        agent.add(doc.id, "=>", doc.data());
       });
     }
   }
