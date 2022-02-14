@@ -271,6 +271,22 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add(new Suggestion("No"));
   }
 
+  function generateUniqueUserID() {
+    //An array of possible characters to use, the alphabet is used to ensure that the ID is not easily guessed
+    let chars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+    //An array to store the generated ID
+    let id = [];
+    //The first character in the ID is a random character from the chars array
+    id.push(chars[Math.floor(Math.random() * chars.length)]);
+    //The next characters in the ID are random numbers
+    for (let i = 0; i < 7; i++) {
+      id.push(Math.floor(Math.random() * 1000000));
+    }
+    //The ID is joined to form a string
+    let uniqueID = id.join("");
+    return uniqueID;
+  }
+
   function userAccount(agent) {
     let person = agent.parameters.person;
     let city = agent.parameters.city;
@@ -279,12 +295,13 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let age = agent.parameters.age;
     let nationalID = agent.parameters.nationalID;
     let gender = agent.parameters.gender;
+    let userID = generateUniqueUserID();
 
     //save a user's age in years using moment.js fromNow() not as a date format
     let momentAge = moment(age, "YYYYMMDD").fromNow();
 
     console.log(
-      `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \nAge: ${momentAge} \nNational ID: ${nationalID} \nSex: ${gender}`
+      `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \nAge: ${momentAge} \nNational ID: ${nationalID} \nSex: ${gender} \nUser ID: ${userID} \n`
     );
 
     return db
@@ -297,11 +314,12 @@ app.post("/pharmacist", express.json(), (req, res) => {
         birthday: momentAge,
         nationalID: nationalID,
         gender: gender,
+        userID: userID,
       })
       .then(
         (ref) => console.log("Successfully added user"),
         agent.add(
-          `Thank you ${person.name}. You have been successfully registered`
+          `Thank you ${person.name}. You have been successfully registered. Please save your user ID: ${userID} you'll use it whenever you want to make a purchase.`
         ),
         agent.add(
           `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \nAge: ${momentAge} \nNational ID ${nationalID} \nSex: ${gender}`
