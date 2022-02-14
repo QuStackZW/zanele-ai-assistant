@@ -416,7 +416,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     doc.forEach((drug) => {
       drugs.push(drug.data());
     });
-    agent.add(`Here are the drugs available: ${drugs}`);
+    agent.add(`Here are the drugs available: ${drugs.name}`);
   }
 
   // async function getDrug(agent) {
@@ -445,7 +445,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
       return;
     } else {
       snapshot.forEach((doc) => {
-        // agent.add(`${doc.data().name}`);
         console.log(doc.id, "=>", doc.data());
         agent.add(`${doc.data().name}`);
       });
