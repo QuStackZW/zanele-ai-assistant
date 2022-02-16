@@ -291,11 +291,17 @@ app.post("/pharmacist", express.json(), (req, res) => {
     //save a user's age in years using moment.js fromNow() not as a date format
     let momentAge = moment(age, "YYYYMMDD").fromNow();
 
+    
+    
     console.log(
       `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \nAge: ${momentAge} \nNational ID: ${nationalID} \nSex: ${gender} \nUser ID: ${userID} \n`
-    );
-
-    return db
+      );
+      
+     //If user is less than 18 years old, they cannot register
+    if (momentAge < "18 years ago") {
+      agent.add("You must be 18 years or older to register");
+    } else {
+    db
       .collection("users")
       .add({
         person: person,
