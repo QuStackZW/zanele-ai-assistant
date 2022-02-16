@@ -343,6 +343,15 @@ app.post("/pharmacist", express.json(), (req, res) => {
               doc.data().nationalID
             } \nSex: ${doc.data().gender} \nUser ID ${doc.data().userID})`
           );
+          agent.add(
+            `Name: ${doc.data().person.name} \nCity: ${
+              doc.data().city
+            } \nAddress: ${doc.data().address} \nPhone: ${
+              doc.data().phone
+            } \nAge: ${doc.data().birthday} \nNational ID: ${
+              doc.data().nationalID
+            } \nSex: ${doc.data().gender} \nUser ID ${doc.data().userID})`
+          );
         });
       });
     agent.end("");
