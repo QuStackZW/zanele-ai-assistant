@@ -201,6 +201,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
         phone: deliveryPhone,
         paymentMethod: paymentMethod,
         paymentPhone: paymentPhone,
+        created_at: new Date(),
       })
       .then(function (docRef) {
         agent.add("Order added successfully");
