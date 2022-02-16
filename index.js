@@ -191,12 +191,12 @@ app.post("/pharmacist", express.json(), (req, res) => {
     // agent.add(new Suggestion("Yes"));
     // agent.add(new Suggestion("No"));
 
-    db.collection("purchases")
+    db.collection("orders")
       .add({
         drug: drugName,
         buyer: whoIsBuying,
-        date: momentHumanReadableDate,
-        time: momentHumanReadableTime,
+        deliveryDate: momentHumanReadableDate,
+        deliveryTime: momentHumanReadableTime,
         address: deliveryAddress,
         phone: deliveryPhone,
         paymentMethod: paymentMethod,
@@ -383,7 +383,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     console.log(`Searching for purchases made on ${momentDate}`);
     agent.add(`Searching for purchases made on ${momentDate}`);
 
-    const purchaseRef = db.collection("purchases");
+    const purchaseRef = db.collection("orders");
     const doc = await purchaseRef.get().where("created_at", "==", momentDate);
     if (!doc.exists) {
       console.log("No such document!");
