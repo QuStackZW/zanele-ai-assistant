@@ -327,6 +327,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   function getUserDetails(agent) {
     //if userID exists in the database, return the user's details
+    let userID = agent.parameters.userID;
+
     db.collection("users")
       .where("userID", "==", userID)
       .get()
