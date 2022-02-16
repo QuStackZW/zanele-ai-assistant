@@ -384,12 +384,12 @@ app.post("/pharmacist", express.json(), (req, res) => {
   async function searchOrders(agent) {
     //Search purchases by date
     let date = agent.parameters.searchDate;
-    let momentDate = moment(date, "YYYYMMDD").fromNow();
-    console.log(`Searching for purchases made on ${momentDate}`);
-    agent.add(`Searching for purchases made on ${momentDate}`);
+    // let momentDate = moment(date, "YYYYMMDD").fromNow();
+    console.log(`Searching for purchases made on ${date}`);
+    agent.add(`Searching for purchases made on ${date}`);
 
     const purchaseRef = db.collection("orders");
-    const doc = await purchaseRef.get().where("created_at", "==", date);
+    const doc = await purchaseRef.get(); //.where("created_at", "==", date);
     if (!doc.exists) {
       console.log("No such document!");
       agent.add(`We do not have any purchases made on ${date}`);
