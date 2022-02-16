@@ -325,7 +325,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     }
   }
 
-  function getUserDetails(agent) {
+  async function getUserDetails(agent) {
     //if userID exists in the database, return the user's details
     let userID = agent.parameters.userID;
 
@@ -345,6 +345,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
           );
         });
       });
+    agent.end("");
   }
 
   // ******************************************** END OF USER ACCOUNT DETAILS***********************************************//
