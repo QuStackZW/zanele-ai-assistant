@@ -187,9 +187,9 @@ app.post("/pharmacist", express.json(), (req, res) => {
       `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
     );
 
-    agent.add("Confirm Transaction Details?");
-    agent.add(new Suggestion("Yes"));
-    agent.add(new Suggestion("No"));
+    // agent.add("Confirm Transaction Details?");
+    // agent.add(new Suggestion("Yes"));
+    // agent.add(new Suggestion("No"));
 
     db.collection("purchases")
       .add({
@@ -378,13 +378,13 @@ app.post("/pharmacist", express.json(), (req, res) => {
   // ******************************************** SEARCH ORDERS FROM DB*************************************************//
   async function searchOrders(agent) {
     //Search purchases by date
-    let date = agent.parameters.date;
+    let date = agent.parameters.searchDate;
     let momentDate = moment(date, "YYYYMMDD").fromNow();
     console.log(`Searching for purchases made on ${momentDate}`);
     agent.add(`Searching for purchases made on ${momentDate}`);
 
     const purchaseRef = db.collection("purchases");
-    const doc = await purchaseRef.get();
+    const doc = await purchaseRef.get().where("created_at", "==", momentDate);
     if (!doc.exists) {
       console.log("No such document!");
       agent.add(`We do not have any purchases made on ${momentDate}`);
