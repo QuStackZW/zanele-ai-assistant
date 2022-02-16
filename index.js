@@ -164,6 +164,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let deliveryPhone = agent.parameters.deliveryPhone;
     let paymentMethod = agent.parameters.payMethod;
     let paymentPhone = agent.parameters.paymentPhone;
+    let userID = agent.parameters.userID;
 
     //human readable date using moment.js
     moment().format("LL");
@@ -183,36 +184,46 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let momentHumanReadableTime = momentTime.getHours() + ":" + momentMinute;
     // let momentHumanReadableTime = momentHour + ":" + momentMinute;
 
-    agent.add(
-      `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
-    );
+    //If invalid userId is entered, then return an error message and abort the transaction
+    //Compare the userId with the userId in the database
+    let userId = await db.collection("users").doc(userID).get();
+    if (!userId.exists) {
+      agent.add("Invalid userId. Please try again.");
+      return;
+    } else {
+      //proceed with the transaction with the userId
 
-    // agent.add("Confirm Transaction Details?");
-    // agent.add(new Suggestion("Yes"));
-    // agent.add(new Suggestion("No"));
+      agent.add(
+        `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
+      );
 
-    db.collection("orders")
-      .add({
-        drug: drugName,
-        buyer: whoIsBuying,
-        deliveryDate: momentHumanReadableDate,
-        deliveryTime: momentHumanReadableTime,
-        address: deliveryAddress,
-        phone: deliveryPhone,
-        paymentMethod: paymentMethod,
-        paymentPhone: paymentPhone,
-        created_at: new Date(),
-      })
-      .then(function (docRef) {
-        agent.add("Order added successfully");
-      })
-      .catch(function (error) {
-        agent.add("Error adding document: ", error);
-      });
-    agent.add("Your order was successful");
-    console.log(
-      `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
-    );
+      // agent.add("Confirm Transaction Details?");
+      // agent.add(new Suggestion("Yes"));
+      // agent.add(new Suggestion("No"));
+
+      db.collection("orders")
+        .add({
+          drug: drugName,
+          buyer: whoIsBuying,
+          deliveryDate: momentHumanReadableDate,
+          deliveryTime: momentHumanReadableTime,
+          address: deliveryAddress,
+          phone: deliveryPhone,
+          paymentMethod: paymentMethod,
+          paymentPhone: paymentPhone,
+          created_at: new Date(),
+        })
+        .then(function (docRef) {
+          agent.add("Order added successfully");
+        })
+        .catch(function (error) {
+          agent.add("Error adding document: ", error);
+        });
+      agent.add("Your order was successful");
+      console.log(
+        `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
+      );
+    }
   }
 
   // ********************************************DRUG DETAILS*****************************************************//
@@ -320,7 +331,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
             `Thank you ${person.name}. You have been successfully registered. \n\nPlease save your user ID: ${userID} you'll use it whenever you want to make a purchase.`
           ),
           agent.add(
-            `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \nAge: ${momentAge} \nNational ID ${nationalID} \nSex: ${gender} \nUser ID ${userID}`
+            `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \nAge: ${momentAge} \nNational ID ${nationalID} \nSex: ${gender} \nUser ID: ${userID}`
           ),
           agent.add(new Suggestion("Ask Question")),
           agent.add(new Suggestion("Add to Cart")),
