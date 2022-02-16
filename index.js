@@ -325,6 +325,26 @@ app.post("/pharmacist", express.json(), (req, res) => {
     }
   }
 
+  function getUserDetails(userID) {
+    //if userID exists in the database, return the user's details
+    db.collection("users")
+      .where("userID", "==", userID)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          console.log(
+            `Name: ${doc.data().person.name} \nCity: ${
+              doc.data().city
+            } \nAddress: ${doc.data().address} \nPhone: ${
+              doc.data().phone
+            } \nAge: ${doc.data().birthday} \nNational ID: ${
+              doc.data().nationalID
+            } \nSex: ${doc.data().gender} \nUser ID ${doc.data().userID})`
+          );
+        });
+      });
+  }
+
   // ******************************************** END OF USER ACCOUNT DETAILS***********************************************//
 
   // *********************************************FETCH DRUGS FROM DB*******************************************************//
@@ -381,6 +401,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
   //***************************************USER ACCOUNT********************************************//
   intentMap.set("Register Account", registerAccount);
   intentMap.set("User Account", userAccount);
+  intentMap.set("Get User Details", getUserDetails);
+
   //********************************END OF USER ACCOUNT********************************************//
 
   //********************************PHARMACEUTICAL QUESTIONS********************************************//
