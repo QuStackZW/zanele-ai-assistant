@@ -366,11 +366,13 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   // *********************************************FETCH DRUGS FROM DB*******************************************************//
   async function getDrug(agent) {
+    let drug = agent.parameters.drugName;
+
     const drugRef = db.collection("drugs");
     const doc = await drugRef.get();
     if (!doc.exists) {
       console.log("No such document!");
-      agent.add(`We do not have ${drugs} in stock!`);
+      agent.add(`We do not have ${drugName} in stock!`);
     } else {
       console.log("Document data:", doc.data());
       agent.add(`${doc.data()}`);
@@ -387,10 +389,10 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add(`Searching for purchases made on ${momentDate}`);
 
     const purchaseRef = db.collection("orders");
-    const doc = await purchaseRef.get().where("created_at", "==", momentDate);
+    const doc = await purchaseRef.get().where("created_at", "==", date);
     if (!doc.exists) {
       console.log("No such document!");
-      agent.add(`We do not have any purchases made on ${momentDate}`);
+      agent.add(`We do not have any purchases made on ${date}`);
     } else {
       console.log("Document data:", doc.data());
       agent.add(`${doc.data()}`);
