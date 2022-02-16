@@ -13,8 +13,6 @@ const { WebhookClient } = require("dialogflow-fulfillment");
 const { Card, Suggestion } = require("dialogflow-fulfillment");
 const token = "testing"; //verification token
 
-moment().format("LLL");
-
 var admin = require("firebase-admin");
 
 var serviceAccount = require("./config/serviceAccountKey.json");
@@ -168,18 +166,22 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let paymentPhone = agent.parameters.paymentPhone;
 
     //human readable date using moment.js
+    moment().format("LL");
     let momentDate = moment(deliveryDate, "YYYY-MM-DD HH:mm:ss").toDate();
-    let momentDay = momentDate.getDate();
-    let momentMonth = momentDate.getMonth() + 1;
-    let momentYear = momentDate.getFullYear();
-    let momentHumanReadableDate =
-      momentDay + "/" + momentMonth + "/" + momentYear;
+    // let momentDay = momentDate.getDate();
+    // let momentMonth = momentDate.getMonth() + 1;
+    // let momentYear = momentDate.getFullYear();
+    let momentHumanReadableDate = momentDate;
 
     //human readable time using moment.js
     let momentTime = moment(deliveryTime, "YYYY-MM-DD HH:mm:ss").toDate();
-    let momentHour = momentTime.getHours();
     let momentMinute = momentTime.getMinutes();
-    let momentHumanReadableTime = momentHour + ":" + momentMinute;
+    //if minute is less than 10, add a 0 to the front
+    if (momentMinute < 10) {
+      momentMinute = "0" + momentMinute;
+    }
+    let momentHumanReadableTime = momentTime.getHours() + ":" + momentMinute;
+    // let momentHumanReadableTime = momentHour + ":" + momentMinute;
 
     agent.add(
       `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
@@ -308,7 +310,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
       .then(
         (ref) => console.log("Successfully added user"),
         agent.add(
-          `Thank you ${person.name}. You have been successfully registered. Please save your user ID: ${userID} you'll use it whenever you want to make a purchase.`
+          `Thank you ${person.name}. You have been successfully registered. \n\nPlease save your user ID: ${userID} you'll use it whenever you want to make a purchase.`
         ),
         agent.add(
           `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \nAge: ${momentAge} \nNational ID ${nationalID} \nSex: ${gender} \nUser ID ${userID}`
