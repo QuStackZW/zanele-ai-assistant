@@ -310,9 +310,13 @@ app.post("/pharmacist", express.json(), (req, res) => {
       `Name: ${person.name} \nCity: ${city} \nAddress: ${address} \nPhone: ${phone} \nAge: ${momentAge} \nNational ID: ${nationalID} \nSex: ${gender} \nUser ID: ${userID} \n`
     );
 
+    //if the same phoneNumber exists in the database, return an error message.
+    let phoneNumber = await db.collection("users").doc(phone).get();
     //If user is less than 18 years old, they cannot register
     if (momentAge < "18 years ago") {
       agent.add("You must be 18 years or older to register");
+    } else if (phoneNumber.exists) {
+      agent.add("Phone number already exists. Please try again.");
     } else {
       db.collection("users")
         .add({
