@@ -354,6 +354,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
           );
         });
       });
+
     agent.end("");
   }
 
@@ -373,6 +374,26 @@ app.post("/pharmacist", express.json(), (req, res) => {
   }
 
   // *********************************************END OF FETCH DRUGS FROM DB*******************************************************//
+  // ******************************************** SEARCH ORDERS FROM DB*************************************************//
+  async function searchOrders(agent) {
+    //Search purchases by date
+    let date = agent.parameters.date;
+    let momentDate = moment(date, "YYYYMMDD").fromNow();
+    console.log(`Searching for purchases made on ${momentDate}`);
+    agent.add(`Searching for purchases made on ${momentDate}`);
+
+    const purchaseRef = db.collection("purchases");
+    const doc = await purchaseRef.get();
+    if (!doc.exists) {
+      console.log("No such document!");
+      agent.add(`We do not have any purchases made on ${momentDate}`);
+    } else {
+      console.log("Document data:", doc.data());
+      agent.add(`${doc.data()}`);
+    }
+  }
+
+  // ******************************************** END SEARCH PURCHASES FROM DB***********************************************//
   // ******************************************** SEARCH AVAILABLE DRUGS FROM DB***********************************************//
   async function searchDrugs(agent) {
     //search db and see which drugs are available
@@ -455,6 +476,10 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("Search All Drugs", searchDrugs);
   intentMap.set("getDrug", getDrug);
   //************************************END OF SEARCH DRUGS******************************************//
+
+  //************************************SEARCH ORDERS******************************************//
+  intentMap.set("Return Orders", searchOrders);
+  //************************************END OF DRUG PURCHASES SEARCH******************************************//
 
   intentMap.set("Make a purchase", makeAPurchase);
   intentMap.set("Drug Order Details", reviewTransactionDetails);
