@@ -210,6 +210,9 @@ app.post("/pharmacist", express.json(), (req, res) => {
         agent.add("Error adding document: ", error);
       });
     agent.add("Your order was successful");
+    console.log(
+      `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
+    );
   }
 
   // ********************************************DRUG DETAILS*****************************************************//
