@@ -293,7 +293,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     return userID;
   }
 
-  await function userAccount(agent) {
+  async function userAccount(agent) {
     let person = agent.parameters.person;
     let city = agent.parameters.city;
     let address = agent.parameters.address;
@@ -342,7 +342,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
           agent.end("")
         );
     }
-  };
+  }
 
   async function getUserDetails(agent) {
     //if userID exists in the database, return the user's details
