@@ -187,11 +187,11 @@ app.post("/pharmacist", express.json(), (req, res) => {
     //If invalid userId is entered, then return an error message and abort the transaction
     //Compare the userId with the userId in the database
     let temp_id = "920399";
-    let userId = await db
-      .collection("users")
-      .where("userID", "==", userID)
-      .get(); //.where("userID", "==", userID)
-    if (userId !== temp_id) {
+    // let userId = await db
+    //   .collection("users")
+    //   .where("userID", "==", userID)
+    //   .get(); //.where("userID", "==", userID)
+    if (temp_id) {
       agent.add("Invalid User ID. Please try again.");
     } else {
       //proceed with the transaction with the userId
