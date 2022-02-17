@@ -356,9 +356,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
       .collection("users")
       .where("userID", "==", userID)
       .get();
-    if (userDetails.empty) {
-      agent.add("User ID does not exist. Please try again.");
-    } else {
+    if (userDetails == true) {
       agent.add(
         `Name: ${userDetails.data().person.name} \nCity: ${
           userDetails.data().city
@@ -368,6 +366,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
           userDetails.data().nationalID
         } \nSex: ${userDetails.data().gender}`
       );
+    } else {
+      agent.add("User ID does not exist. Please try again.");
     }
     agent.end("");
     // }
