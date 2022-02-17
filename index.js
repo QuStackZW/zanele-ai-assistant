@@ -58,15 +58,15 @@ app.post("/pharmacist", express.json(), (req, res) => {
     agent.add(`Yes we are live on port ${port}`);
   }
 
-  function welcome(agent) {
-    agent.add(
-      "Hello there. I am Zanele, your awesome virtual assistant pharmacist! My task is to assist you with the following functions. Go ahead and have fun. \n\n1. Ask a medical or pharmaceutical related question. \n2. Buy over-the-counter medicine or any of our products \n3. Register to be a member of the pharmacy"
-    );
+  // function welcome(agent) {
+  //   agent.add(
+  //     "Hello there. I am Zanele, your awesome virtual assistant pharmacist! My task is to assist you with the following functions. Go ahead and have fun. \n\n1. Ask a medical or pharmaceutical related question. \n2. Buy over-the-counter medicine or any of our products \n3. Register to be a member of the pharmacy"
+  //   );
 
-    agent.add(new Suggestion("Ask Question"));
-    agent.add(new Suggestion("Add to Cart"));
-    agent.add(new Suggestion("Register"));
-  }
+  //   agent.add(new Suggestion("Ask Question"));
+  //   agent.add(new Suggestion("Add to Cart"));
+  //   agent.add(new Suggestion("Register"));
+  // }
 
   function askPharmacyOrMedicalQuestion(agent) {
     agent.add("Sure, what would you like to ask?");
@@ -450,7 +450,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   //***************************INTENT MAPS AS DEFINED BY THE CODE AND DIALOGFLOW*******************************//
   let intentMap = new Map();
-  intentMap.set("Default Welcome Intent", welcome);
+  // intentMap.set("Default Welcome Intent", welcome);
   intentMap.set("Default Fallback Intent", fallback);
   intentMap.set("Mock Up Demo", testing);
   intentMap.set("Universal Cancel Intent", cancel);
