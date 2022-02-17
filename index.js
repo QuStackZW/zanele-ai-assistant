@@ -431,6 +431,16 @@ app.post("/pharmacist", express.json(), (req, res) => {
       });
     }
   }
+
+  function validateEmail(agent) {
+    let email = agent.parameters.validateEmail;
+    //validate email address using regular expressions
+    if (email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+      agent.add("Email is valid");
+    } else {
+      agent.add("Email is invalid");
+    }
+  }
   // ******************************************END OF SEARCH AVAILABLE DRUGS*******************************************//
 
   // ******************************************UNIVERSAL CANCEL INTENT***********************************************//
@@ -458,6 +468,10 @@ app.post("/pharmacist", express.json(), (req, res) => {
   intentMap.set("Get User Details", getUserDetails);
 
   //********************************END OF USER ACCOUNT********************************************//
+  //***************************************VALIDATION********************************************//
+  intentMap.set("Get Email", validateEmail);
+
+  //********************************END OF VALIDATION********************************************//
 
   //********************************PHARMACEUTICAL QUESTIONS********************************************//
 
