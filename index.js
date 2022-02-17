@@ -191,7 +191,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     //   .collection("users")
     //   .where("userID", "==", userID)
     //   .get(); //.where("userID", "==", userID)
-    if (temp_id) {
+    if (!temp_id) {
       agent.add("Invalid User ID. Please try again.");
     } else {
       //proceed with the transaction with the userId
