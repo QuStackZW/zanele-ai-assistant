@@ -432,6 +432,10 @@ app.post("/pharmacist", express.json(), (req, res) => {
     }
   }
 
+  // ******************************************END OF SEARCH AVAILABLE DRUGS*******************************************//
+
+  // **********************************VALIDATION FOR USER INPUTS******************************************************//
+
   function validateEmail(agent) {
     let email = agent.parameters.validateEmail;
     //validate email address using regular expressions
@@ -441,7 +445,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
       agent.add("Email is invalid");
     }
   }
-  // ******************************************END OF SEARCH AVAILABLE DRUGS*******************************************//
+  // **********************************END OF VALIDATION FOR USER INPUTS******************************************************//
 
   // ******************************************UNIVERSAL CANCEL INTENT***********************************************//
   function cancel(agent) {
