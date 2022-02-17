@@ -348,9 +348,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     //if userID exists in the database, return the user's details
     let userID = agent.parameters.userID;
 
-    db.collection("users")
-      .where("userID", "==", userID)
-      .get()
+    db.collection("users").where("userID", "==", userID).get();
     if (!userID) {
       agent.add("Please enter your user ID");
     } else {
@@ -362,8 +360,17 @@ app.post("/pharmacist", express.json(), (req, res) => {
         agent.add("User ID does not exist. Please try again.");
       } else {
         agent.add(
-          `Name: ${userDetails.data().person.name} \nCity: ${userDetails.data().city} \nAddress: ${userDetails.data().address} \nPhone: ${userDetails.data().phone} \nAge: ${userDetails.data().birthday} \nNational ID: ${userDetails.data().nationalID} \nSex: ${userDetails.data().gender}`);
-    agent.end("");
+          `Name: ${userDetails.data().person.name} \nCity: ${
+            userDetails.data().city
+          } \nAddress: ${userDetails.data().address} \nPhone: ${
+            userDetails.data().phone
+          } \nAge: ${userDetails.data().birthday} \nNational ID: ${
+            userDetails.data().nationalID
+          } \nSex: ${userDetails.data().gender}`
+        );
+      }
+      agent.end("");
+    }
   }
 
   // ******************************************** END OF USER ACCOUNT DETAILS***********************************************//
