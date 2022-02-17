@@ -351,29 +351,18 @@ app.post("/pharmacist", express.json(), (req, res) => {
     db.collection("users")
       .where("userID", "==", userID)
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(
-            `Name: ${doc.data().person.name} \nCity: ${
-              doc.data().city
-            } \nAddress: ${doc.data().address} \nPhone: ${
-              doc.data().phone
-            } \nAge: ${doc.data().birthday} \nNational ID: ${
-              doc.data().nationalID
-            } \nSex: ${doc.data().gender} \nUser ID ${doc.data().userID})`
-          );
-          agent.add(
-            `Name: ${doc.data().person.name} \nCity: ${
-              doc.data().city
-            } \nAddress: ${doc.data().address} \nPhone: ${
-              doc.data().phone
-            } \nAge: ${doc.data().birthday} \nNational ID: ${
-              doc.data().nationalID
-            } \nSex: ${doc.data().gender} \nUser ID ${doc.data().userID})`
-          );
-        });
-      });
-
+    if (!userID) {
+      agent.add("Please enter your user ID");
+    } else {
+      let userDetails = await db
+        .collection("users")
+        .where("userID", "==", userID)
+        .get();
+      if (userDetails.empty) {
+        agent.add("User ID does not exist. Please try again.");
+      } else {
+        agent.add(
+          `Name: ${userDetails.data().person.name} \nCity: ${userDetails.data().city} \nAddress: ${userDetails.data().address} \nPhone: ${userDetails.data().phone} \nAge: ${userDetails.data().birthday} \nNational ID: ${userDetails.data().nationalID} \nSex: ${userDetails.data().gender}`);
     agent.end("");
   }
 
