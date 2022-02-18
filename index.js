@@ -197,10 +197,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
             `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
           );
 
-      // agent.add("Confirm Transaction Details?");
-      // agent.add(new Suggestion("Yes"));
-      // agent.add(new Suggestion("No"));
-
       db.collection("orders")
         .add({
           drug: drugName,
