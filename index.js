@@ -195,21 +195,21 @@ app.post("/pharmacist", express.json(), (req, res) => {
       return;
     } else {
       agent.add(
-        "Your transaction details are as follows: \n\nDrug Name: " +
+        "Your transaction details are as follows: \nDrug Name: " +
           drugName +
-          "\n\nWho is buying: " +
-          whoIsBuying +
-          "\n\nDelivery Date: " +
+          "\nWho is buying: " +
+          whoIsBuying.name +
+          "\nDelivery Date: " +
           momentHumanReadableDate +
-          "\n\nDelivery Time: " +
+          "\nDelivery Time: " +
           momentHumanReadableTime +
-          "\n\nDelivery Address: " +
+          "\nDelivery Address: " +
           deliveryAddress +
-          "\n\nDelivery Phone: " +
+          "\nDelivery Phone: " +
           deliveryPhone +
-          "\n\nPayment Method: " +
+          "\nPayment Method: " +
           paymentMethod +
-          "\n\nPayment Phone: " +
+          "\nPayment Phone: " +
           paymentPhone +
           "\n\n\nPlease confirm your transaction details by saying 'Yes' or 'No'"
       );
