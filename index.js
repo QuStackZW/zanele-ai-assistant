@@ -184,86 +184,36 @@ app.post("/pharmacist", express.json(), (req, res) => {
     //If invalid userId is entered, then return an error message and abort the transaction
     //Compare the userId with the userId in the database
     // let temp_id = "920399";
-    let userId = await db.collection("users").where("userID", "==", true).get();
-    if (userId.empty) {
-      agent.add("Invalid User ID. Please try again.");
+    let userIdRef = db.collection("users");
+    const snapshot = await userIdRef.get(); //get the userId from the database
+    let userId = snapshot.docs[0].data().userId;
+    if (userID !== userId) {
+      agent.add(
+        "Sorry, you are not authorized to make a purchase. Please contact the store owner for more information."
+      );
       return;
     } else {
-      //If the userId is valid, then continue with the transaction
-      snapshot.forEach((doc) => {
-        // let user = doc.data();
-        console.log(doc.id, " => ", doc.data());
-        // console.log(user.userID);
-        // console.log(userID);
-        if (userID === doc.data().userID) {
-          agent.add(
-            "Your transaction details are as follows: \n\nDrug Name: " +
-              drugName +
-              "\n\nBuyer ID: " +
-              whoIsBuying +
-              "\n\nDelivery Date: " +
-              momentHumanReadableDate +
-              "\n\nDelivery Time: " +
-              momentHumanReadableTime +
-              "\n\nDelivery Address: " +
-              deliveryAddress +
-              "\n\nDelivery Phone: " +
-              deliveryPhone +
-              "\n\nPayment Method: " +
-              paymentMethod +
-              "\n\nPayment Phone: " +
-              paymentPhone
-          );
-          // if (user.userID === userID) {
-          // agent.add(
-          //   "Your transaction details are as follows: \n\nDrug Name: " +
-          //     drugName +
-          //     "\n\nBuyer ID: " +
-          //     whoIsBuying +
-          //     "\n\nDelivery Date: " +
-          //     momentHumanReadableDate +
-          //     "\n\nDelivery Time: " +
-          //     momentHumanReadableTime +
-          //     "\n\nDelivery Address: " +
-          //     deliveryAddress +
-          //     "\n\nDelivery Phone: " +
-          //     deliveryPhone +
-          //     "\n\nPayment Method: " +
-          //     paymentMethod +
-          //     "\n\nPayment Phone: " +
-          //     paymentPhone +
-          //     "\n\nUser ID: " +
-          //     userID +
-          //     "\n\nThank you for shopping with us!"
-          // );
-          // agent.add(
-          //   `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
-          // );
-
-          db.collection("orders")
-            .add({
-              drug: drugName,
-              buyer: whoIsBuying,
-              deliveryDate: momentHumanReadableDate,
-              deliveryTime: momentHumanReadableTime,
-              address: deliveryAddress,
-              phone: deliveryPhone,
-              paymentMethod: paymentMethod,
-              paymentPhone: paymentPhone,
-              created_at: new Date(),
-            })
-            .then(function (docRef) {
-              agent.add("Order added successfully");
-            })
-            .catch(function (error) {
-              agent.add("Error adding document: ", error);
-            });
-          agent.add("Your order was successful");
-          console.log(
-            `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
-          );
-        }
-      });
+      agent.add(
+        "Your transaction details are as follows: \n\nDrug Name: " +
+          drugName +
+          "\n\nWho is buying: " +
+          whoIsBuying +
+          "\n\nDelivery Date: " +
+          momentHumanReadableDate +
+          "\n\nDelivery Time: " +
+          momentHumanReadableTime +
+          "\n\nDelivery Address: " +
+          deliveryAddress +
+          "\n\nDelivery Phone: " +
+          deliveryPhone +
+          "\n\nPayment Method: " +
+          paymentMethod +
+          "\n\nPayment Phone: " +
+          paymentPhone +
+          "\n\n\nPlease confirm your transaction details by saying 'Yes' or 'No'"
+      );
+      agent.add(new Suggestion("Yes"));
+      agent.add(new Suggestion("No"));
     }
   }
 
