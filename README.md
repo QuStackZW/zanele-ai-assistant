@@ -55,6 +55,10 @@ Install the dependencies:
 andil@Diana MINGW64 ~/Desktop/code/school/virtual-assistant-pharmacist (main)
 $ npm init
 
+When attempting to run this code on a different machine. First run the following command using your Terminal, Commanda Line Prompt or Powershell
+
+$ npm install
+
 ```
 
 ### Author
