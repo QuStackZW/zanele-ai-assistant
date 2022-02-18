@@ -164,7 +164,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     let deliveryPhone = agent.parameters.deliveryPhone;
     let paymentMethod = agent.parameters.payMethod;
     let paymentPhone = agent.parameters.paymentPhone;
-    let userID = agent.parameters.userID;
+    let id = agent.parameters.userID;
 
     //human readable date using moment.js
     moment().format("LL");
@@ -186,8 +186,8 @@ app.post("/pharmacist", express.json(), (req, res) => {
     // let temp_id = "920399";
     let userIdRef = db.collection("users");
     const snapshot = await userIdRef.get(); //get the userId from the database
-    let userId = snapshot.docs[0].data().userId;
-    if (userID !== userId) {
+    let userId = snapshot.docs[0].data().userID;
+    if (id !== userId) {
       agent.add(
         "Sorry, you are not authorized to make a purchase. Please contact the store owner for more information."
       );
@@ -215,6 +215,29 @@ app.post("/pharmacist", express.json(), (req, res) => {
       agent.add(new Suggestion("Yes"));
       agent.add(new Suggestion("No"));
     }
+
+    db.collection("orders")
+      .add({
+        drug: drugName,
+        buyer: whoIsBuying,
+        deliveryDate: momentHumanReadableDate,
+        deliveryTime: momentHumanReadableTime,
+        address: deliveryAddress,
+        phone: deliveryPhone,
+        paymentMethod: paymentMethod,
+        paymentPhone: paymentPhone,
+        created_at: new Date(),
+      })
+      .then(function (docRef) {
+        agent.add("Order added successfully");
+      })
+      .catch(function (error) {
+        agent.add("Error adding document: ", error);
+      });
+    agent.add("Your order was successful");
+    console.log(
+      `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
+    );
   }
 
   // ********************************************DRUG DETAILS*****************************************************//
