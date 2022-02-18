@@ -183,12 +183,11 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
     //If invalid userId is entered, then return an error message and abort the transaction
     //Compare the userId with the userId in the database
-    let temp_id = "920399";
-    // let userId = await db
-    //   .collection("users")
-    //   .where("userID", "==", userID)
-    //   .get(); //.where("userID", "==", userID)
-    if (!temp_id) {
+    // let temp_id = "920399";
+    const userIdRef = db.collection("users");
+    const snapshot = await userIdRef.get(); //get the userId from the database
+    let userId = snapshot.docs[0].data().userID;
+    if (id !== userId) {
       agent.add(
         "Sorry, you are not authorized to make a purchase. Please contact the store owner for more information."
       );
