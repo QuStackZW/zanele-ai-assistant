@@ -354,7 +354,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
       .collection("users")
       .where("userID", "==", userID)
       .get();
-    if (!userDetails.empty) {
+    if (userDetails.empty) {
       agent.add("User ID does not exist. Please try again.");
     } else {
       agent.add(
