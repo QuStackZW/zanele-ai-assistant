@@ -189,11 +189,13 @@ app.post("/pharmacist", express.json(), (req, res) => {
       agent.add("Invalid User ID. Please try again.");
       return;
     } else {
-      //proceed with the transaction with the userId
-
-      agent.add(
-        `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
-      );
+      //If the userId is valid, then continue with the transaction
+      snapshot.forEach(doc => {
+        let user = doc.data();
+        if (user.userID === userID) {
+          agent.add(
+            `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
+          );
 
       // agent.add("Confirm Transaction Details?");
       // agent.add(new Suggestion("Yes"));
@@ -221,7 +223,9 @@ app.post("/pharmacist", express.json(), (req, res) => {
       console.log(
         `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
       );
-    }
+        }
+      });
+
   }
 
   // ********************************************DRUG DETAILS*****************************************************//
