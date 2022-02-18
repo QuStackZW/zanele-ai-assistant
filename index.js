@@ -187,12 +187,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     const userIdRef = db.collection("users");
     const snapshot = await userIdRef.get(); //get the userId from the database
     let userId = snapshot.docs[0].data().userID;
-    if (
-      id !== userId ||
-      id !== "920399" ||
-      id !== "580017" ||
-      id !== "262331"
-    ) {
+    if (id != userId || id != "920399" || id != "580017" || id != "262331") {
       agent.add(
         "Sorry, you are not authorized to make a purchase. Please contact the store owner for more information."
       );
