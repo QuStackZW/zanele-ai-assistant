@@ -191,8 +191,11 @@ app.post("/pharmacist", express.json(), (req, res) => {
     } else {
       //If the userId is valid, then continue with the transaction
       snapshot.forEach((doc) => {
-        let user = doc.data();
-        if (user.userID === userID) {
+        // let user = doc.data();
+        console.log(doc.id, " => ", doc.data());
+        // console.log(user.userID);
+        // console.log(userID);
+        if (userID === doc.data().userID) {
           agent.add(
             "Your transaction details are as follows: \n\nDrug Name: " +
               drugName +
@@ -209,11 +212,30 @@ app.post("/pharmacist", express.json(), (req, res) => {
               "\n\nPayment Method: " +
               paymentMethod +
               "\n\nPayment Phone: " +
-              paymentPhone +
-              "\n\nUser ID: " +
-              userID +
-              "\n\nThank you for shopping with us!"
+              paymentPhone
           );
+          // if (user.userID === userID) {
+          // agent.add(
+          //   "Your transaction details are as follows: \n\nDrug Name: " +
+          //     drugName +
+          //     "\n\nBuyer ID: " +
+          //     whoIsBuying +
+          //     "\n\nDelivery Date: " +
+          //     momentHumanReadableDate +
+          //     "\n\nDelivery Time: " +
+          //     momentHumanReadableTime +
+          //     "\n\nDelivery Address: " +
+          //     deliveryAddress +
+          //     "\n\nDelivery Phone: " +
+          //     deliveryPhone +
+          //     "\n\nPayment Method: " +
+          //     paymentMethod +
+          //     "\n\nPayment Phone: " +
+          //     paymentPhone +
+          //     "\n\nUser ID: " +
+          //     userID +
+          //     "\n\nThank you for shopping with us!"
+          // );
           // agent.add(
           //   `Your Name: ${whoIsBuying.name} \nOrder: ${drugName} \nDelivery Date: ${momentHumanReadableDate} \nDelivery Time: ${momentHumanReadableTime} \nDelivery Address: ${deliveryAddress} \nDelivery Phone: ${deliveryPhone} \nPayment Method: ${paymentMethod} \nLinked Number: ${paymentPhone}`
           // );
