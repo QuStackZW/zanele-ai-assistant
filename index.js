@@ -169,9 +169,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
     //human readable date using moment.js
     moment().format("LL");
     let momentDate = moment(deliveryDate, "YYYY-MM-DD HH:mm:ss").toDate();
-    // let momentDay = momentDate.getDate();
-    // let momentMonth = momentDate.getMonth() + 1;
-    // let momentYear = momentDate.getFullYear();
     let momentHumanReadableDate = momentDate;
 
     //human readable time using moment.js
@@ -186,13 +183,11 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
     //If invalid userId is entered, then return an error message and abort the transaction
     //Compare the userId with the userId in the database
-    let temp_id = "920399";
-    // let userId = await db
-    //   .collection("users")
-    //   .where("userID", "==", userID)
-    //   .get(); //.where("userID", "==", userID)
-    if (!temp_id) {
+    // let temp_id = "920399";
+    let userId = await db.collection("users").where("userID", "==", true).get();
+    if (userId.empty) {
       agent.add("Invalid User ID. Please try again.");
+      return;
     } else {
       //proceed with the transaction with the userId
 
