@@ -53,7 +53,7 @@ app.get("/times", (req, res) => {
   res.send(showTimes());
 });
 
-showTimes = () => {
+const showTimes = () => {
   let result = "";
   const times = process.env.TIMES || 5;
   for (i = 0; i < times; i++) {
@@ -375,14 +375,9 @@ app.post("/pharmacist", express.json(), (req, res) => {
   async function getUserDetails(agent) {
     //if userID exists in the database, return the user's details
     let userID = agent.parameters.userID;
-
-    // db.collection("users").where("userID", "==", userID).get();
-    // if (!userID) {
-    //   agent.add("Please enter your user ID");
-    // } else {
     let userDetails = await db
       .collection("users")
-      .where("userID", "==", userID)
+      .where("userID", "===", userID)
       .get();
     if (userDetails.empty) {
       agent.add("User ID does not exist. Please try again.");
