@@ -48,6 +48,20 @@ app.get("/", (req, res) => {
   return res.end(query.query.challenge);
 }); // end of app.get
 
+// define config vars
+app.get("/times", (req, res) => {
+  res.send(showTimes());
+});
+
+showTimes = () => {
+  let result = "";
+  const times = process.env.TIMES || 5;
+  for (i = 0; i < times; i++) {
+    result += i + " ";
+  }
+  return result;
+};
+
 app.post("/pharmacist", express.json(), (req, res) => {
   const agent = new WebhookClient({
     request: req,
