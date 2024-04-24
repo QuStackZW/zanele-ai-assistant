@@ -7,16 +7,15 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const app = express().use(bodyParser.json()); // creates express http server
+const app = express().use(bodyParser.json());
 const moment = require("moment");
 const { WebhookClient } = require("dialogflow-fulfillment");
-const { Card, Suggestion } = require("dialogflow-fulfillment");
+const { Suggestion } = require("dialogflow-fulfillment");
 const token = "testing"; //verification token
 
-var admin = require("firebase-admin");
+const admin = require("firebase-admin");
 
-var serviceAccount = require("./config/serviceAccountKey.json");
-const { AgentsClient } = require("@google-cloud/dialogflow");
+const serviceAccount = require("./config/serviceAccountKey.json");
 
 try {
   admin.initializeApp({
@@ -30,7 +29,7 @@ try {
 }
 
 //db access using firestore
-var db = admin.firestore();
+const db = admin.firestore();
 db.settings({ ignoreUndefinedProperties: true });
 
 process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
@@ -48,15 +47,15 @@ app.get("/", (req, res) => {
   return res.end(query.query.challenge);
 }); // end of app.get
 
-// define config vars
+// define config constants
 app.get("/times", (req, res) => {
   res.send(showTimes());
 });
 
 const showTimes = () => {
   let result = "";
-  const times = process.env.TIMES || 5;
-  for (i = 0; i < times; i++) {
+  const times = 5;
+  for (let i = 0; i <= times; i++) {
     result += i + " ";
   }
   return result;
@@ -71,16 +70,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
   function testing(agent) {
     agent.add(`Yes we are live on port ${port}`);
   }
-
-  // function welcome(agent) {
-  //   agent.add(
-  //     "Hello there. I am Zanele, your awesome virtual assistant pharmacist! My task is to assist you with the following functions. Go ahead and have fun. \n\n1. Ask a medical or pharmaceutical related question. \n2. Buy over-the-counter medicine or any of our products \n3. Register to be a member of the pharmacy"
-  //   );
-
-  //   agent.add(new Suggestion("Ask Question"));
-  //   agent.add(new Suggestion("Add to Cart"));
-  //   agent.add(new Suggestion("Register"));
-  // }
 
   function askPharmacyOrMedicalQuestion(agent) {
     agent.add("Sure, what would you like to ask?");
@@ -124,7 +113,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   function howToLowerCholesterol(agent) {
     agent.add(
-      "If you are asking this for yourself, you may not want to try the keto diet. Cutting your intake of saturated fats and trans-fats is an important step. So is increasing your intake of omega-3 fatty acids and fiber. \n\nGetting more physical activity and losing weight may help. If you are smoking, stop. Also, limit your alcohol consumption. High cholesterol can increase your risk of stroke and various types of cardiovascular diseases."
+      "If you are asking this for yourself, you may not want to try the keto diet. Cutting your intake of saturated fats and trans-fats is an important step. So is increasing your intake of omega-3 fatty acids and fiber. \n\nGetting more physical activity and losing weight may help. If you are smoking, stop. Also, limit your alcohol consumption. High cholesterol can increase your risk of stroke and constious types of cardiovascular diseases."
     );
   }
 
@@ -197,7 +186,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
     //If invalid userId is entered, then return an error message and abort the transaction
     //Compare the userId with the userId in the database
-    // let temp_id = "920399";
     const userIdRef = db.collection("users");
     const snapshot = await userIdRef.get(); //get the userId from the database
     let userId = snapshot.docs[0].data().userID;
@@ -254,21 +242,7 @@ app.post("/pharmacist", express.json(), (req, res) => {
     );
   }
 
-  // ********************************************DRUG DETAILS*****************************************************//
-
-  // Oral route.
-  // Sublingual/ Buccal route.
-  // Rectal route.
-  // Topical route.
-  // Transdermal route.
-  // Inhalational route/ pulmonary route.
-  // Injection route.
-  // Oral administration. This is the most frequently used route of drug administration and is the most convenient and economic. ...
-  // Sublingual. ...
-  // Rectal administration. ...
-  // Topical administration. ...
-  // Parenteral administration. ...
-  // Intravenous injection.
+  // ********************************************DRUG DETAILS*****************************************************/
 
   async function drugHandler(agent) {
     let name = agent.parameters.name;
@@ -398,8 +372,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   // *********************************************FETCH DRUGS FROM DB*******************************************************//
   async function getDrug(agent) {
-    let drug = agent.parameters.drugName;
-
     const drugRef = db.collection("drugs");
     const doc = await drugRef.get();
     if (!doc.exists) {
@@ -416,12 +388,11 @@ app.post("/pharmacist", express.json(), (req, res) => {
   async function searchOrders(agent) {
     //Search purchases by date
     let date = agent.parameters.searchDate;
-    // let momentDate = moment(date, "YYYYMMDD").fromNow();
     console.log(`Searching for purchases made on ${date}`);
     agent.add(`Searching for purchases made on ${date}`);
 
     const purchaseRef = db.collection("orders");
-    const doc = await purchaseRef.get(); //.where("created_at", "==", date);
+    const doc = await purchaseRef.get();
     if (!doc.exists) {
       console.log("No such document!");
       agent.add(`We do not have any purchases made on ${date}`);
@@ -440,7 +411,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
     if (snapshot.empty) {
       console.log("No drugs available.");
       agent.add("No drugs available.");
-      return;
     } else {
       snapshot.forEach((doc) => {
         console.log(doc.id, "=>", doc.data());
@@ -478,7 +448,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   //***************************INTENT MAPS AS DEFINED BY THE CODE AND DIALOGFLOW*******************************//
   let intentMap = new Map();
-  // intentMap.set("Default Welcome Intent", welcome);
   intentMap.set("Default Fallback Intent", fallback);
   intentMap.set("Mock Up Demo", testing);
   intentMap.set("Universal Cancel Intent", cancel);
@@ -539,7 +508,6 @@ app.post("/pharmacist", express.json(), (req, res) => {
 
   intentMap.set("Make a purchase", makeAPurchase);
   intentMap.set("Drug Order Details", reviewTransactionDetails);
-  // intentMap.set("Confirm Transaction", confirmTransaction);
   //************************************END OF DRUG PURCHASES****************************************//
   agent.handleRequest(intentMap);
 });
